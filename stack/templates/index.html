@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+  <!-- Container #1 (see wireframe) -->
+  <md-toolbar layout="row" class="md-toolbar-tools">
+    <md-button class="menu md-icon-button" hide-gt-sm ng-click="app.toggleList()"
+               aria-label="Show User List">
+      <md-icon md-svg-icon="menu"></md-icon>
+    </md-button>
+    <h1>Stack</h1>
+   <div class="md-toolbar-tools">
+      <h3 flex="10">
+      </h3>
+      <md-input-container md-theme="input" flex>
+        <label>&nbsp;</label>
+        <input ng-model="search.who" placeholder="enter search criteria">
+      </md-input-container>
+
+      <md-button aria-label="Search" ng-click="showSearch = !showSearch">
+        <md-icon>search</md-icon>
+      </md-button>
+      <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
+        <i class="material-icons">favorite</i>
+      </md-button>
+    </div>    
+  </md-toolbar>
+
+ <div ng-controller="AppCtrl" ng-cloak >
+  <md-content class="md-padding" layout-xs="column" layout="row">
+      <md-card >
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Project 1</span>
+            <span class="md-subhead">Large</span>
+          </md-card-title-text>
+          <md-card-title-media>
+            <div class="md-media-lg card-media"></div>
+          </md-card-title-media>
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button>Action 1</md-button>
+          <md-button>Action 2</md-button>
+        </md-card-actions>
+      </md-card>
+      <md-card >
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Project 2</span>
+            <span class="md-subhead">Large</span>
+          </md-card-title-text>
+          <md-card-title-media>
+            <div class="md-media-lg card-media"></div>
+          </md-card-title-media>
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button>Action 1</md-button>
+          <md-button>Action 2</md-button>
+        </md-card-actions>
+      </md-card>   
+
+    <md-card>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Card with image</span>
+            <span class="md-subhead">Extra Large</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content layout="row" layout-align="space-between">
+
+          <md-card-actions layout="row">
+            <md-button class="md-icon-button" aria-label="Favorite">
+              <md-icon>favorite</md-icon>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="Settings">
+              <md-icon>menu</md-icon>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="Share">
+              <md-icon>share-arrow</md-icon>
+            </md-button>
+            <a class="stack-service-logo" href="/javascript" data-hing="javascript">
+              <img alt="Javascript" src="http://img.stackshare.io/service/1209/javascript.jpeg">
+            </a>
+            <a class="stack-service-logo" href="/github" data-hint="github">
+              <img alt="Javascript" src="http://img.stackshare.io/service/27/sBsvBbjY.png">
+            </a>  
+            <a style="padding-right: 10px" class="stack-service-logo" href="https://techgallery.ciandt.com/#/technologies/elasticsearch" data-hint="github">            
+              <img ng-src="https://www.googleapis.com/download/storage/v1/b/tech-gallery-prod/o/elasticsearch?alt=media" data-placeholder-img="" class="technology-image" src="https://www.googleapis.com/download/storage/v1/b/tech-gallery-prod/o/elasticsearch?generation=1452857407097000&amp;alt=media">
+            </a>
+          </md-card-actions>
+        </md-card-content>
+      </md-card>
+
+  </md-content>
+ </div>
+
+{% endblock %}
