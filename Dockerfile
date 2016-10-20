@@ -7,13 +7,11 @@ RUN apt-get install -y python-pip curl
 RUN mkdir /app
 RUN chmod +x /app
 
-COPY requirements.txt /app
 COPY server.py /app
 
 ADD stack /app/stack
 
 RUN pip install flask
-RUN pip install gunicorn
 
 WORKDIR /app
 # not work
