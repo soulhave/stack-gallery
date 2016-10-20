@@ -8,7 +8,7 @@
   <link type="text/css" rel="stylesheet" href="{{ static('css/style.css') }}" media="screen,projection"/>
 
 </head>
-<body ng-app="BlankApp" ng-cloak>
+<body ng-app="StarterApp" ng-cloak>
   <!--
     Your HTML content here
   -->  
@@ -24,24 +24,132 @@
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
   <!-- Angular Material Library -->
   <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+  <!-- Add ngMdIcons module -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.1/angular-material-icons.min.js"></script>  
   
   <!-- Your application bootstrap  -->
   <script type="text/javascript">    
     /**
      * You must include the dependency on 'ngMaterial' 
      */
-    angular.module('BlankApp', ['ngMaterial']);
 
-    angular.module('BlankApp')
+    var app = angular.module('StarterApp', ['ngMaterial', 'ngMdIcons']);
 
-    .controller('AppCtrl', function($scope) {
-      $scope.imagePath = 'img/washedout.png';
-    })
-    .config(function($mdThemingProvider) {
-      $mdThemingProvider.theme('dark-grey').backgroundPalette('grey').dark();
-      $mdThemingProvider.theme('dark-orange').backgroundPalette('orange').dark();
-      $mdThemingProvider.theme('dark-purple').backgroundPalette('deep-purple').dark();
-      $mdThemingProvider.theme('dark-blue').backgroundPalette('blue').dark();
+    app.config(['$interpolateProvider', function ($interpolateProvider) {
+    $interpolateProvider.startSymbol('[[');
+    $interpolateProvider.endSymbol(']]');
+    }]);  
+
+    app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog){
+      $scope.toggleSidenav = function(menuId) {
+        $mdSidenav(menuId).toggle();
+      };
+
+      $scope.projects = [
+          {
+            flow: 'Cartões_iOS',
+            contract: 'Itaú',
+            skill: 110,
+            stack: [
+              {
+                technology: 'javascript',
+                imageUrl: 'http://img.stackshare.io/service/1209/javascript.jpeg' 
+              },
+              {
+                technology: 'github',
+                imageUrl: 'http://img.stackshare.io/service/27/sBsvBbjY.png' 
+              },
+              {
+                technology: 'elasticsearch',
+                imageUrl: 'https://www.googleapis.com/download/storage/v1/b/tech-gallery-prod/o/elasticsearch?alt=media' 
+              }
+            ]
+          },
+          {
+            flow: 'Pessoa Física',
+            contract: 'Itaú',
+            skill: 98,            
+            stack: [
+              {
+                technology: 'javascript',
+                imageUrl: 'http://img.stackshare.io/service/1209/javascript.jpeg' 
+              },
+              {
+                technology: 'github',
+                imageUrl: 'http://img.stackshare.io/service/27/sBsvBbjY.png' 
+              },
+              {
+                technology: 'elasticsearch',
+                imageUrl: 'https://www.googleapis.com/download/storage/v1/b/tech-gallery-prod/o/elasticsearch?alt=media' 
+              },
+              {
+                technology: 'javascript',
+                imageUrl: 'http://img.stackshare.io/service/1209/javascript.jpeg' 
+              },
+              {
+                technology: 'github',
+                imageUrl: 'http://img.stackshare.io/service/27/sBsvBbjY.png' 
+              }, 
+              {
+                technology: 'javascript',
+                imageUrl: 'http://img.stackshare.io/service/1209/javascript.jpeg' 
+              },
+              {
+                technology: 'github',
+                imageUrl: 'http://img.stackshare.io/service/27/sBsvBbjY.png' 
+              }
+            ]
+          },
+          {
+            flow: 'ICCD',
+            contract: 'Itaú',
+            skill: 55,
+          }
+        ];
+
+      $scope.alert = '';
+      
+      $scope.showAdd = function(ev) {
+        $mdDialog.show({
+          controller: DialogController,
+          template: '<md-dialog aria-label="Mango (Fruit)"> <md-content class="md-padding"> <form name="userForm"> <div layout layout-sm="column"> <md-input-container flex> <label>First NAME</label> <input ng-model="user.firstName" placeholder="Placeholder text"> </md-input-container> <md-input-container flex> <label>Last Name</label> <input ng-model="theMax"> </md-input-container> </div> <md-input-container flex> <label>Address</label> <input ng-model="user.address"> </md-input-container> <div layout layout-sm="column"> <md-input-container flex> <label>City</label> <input ng-model="user.city"> </md-input-container> <md-input-container flex> <label>State</label> <input ng-model="user.state"> </md-input-container> <md-input-container flex> <label>Postal Code</label> <input ng-model="user.postalCode"> </md-input-container> </div> <md-input-container flex> <label>Biography</label> <textarea ng-model="user.biography" columns="1" md-maxlength="150"></textarea> </md-input-container> </form> </md-content> <div class="md-actions" layout="row"> <span flex></span> <md-button ng-click="answer(\'not useful\')"> Cancel </md-button> <md-button ng-click="answer(\'useful\')" class="md-primary"> Save </md-button> </div></md-dialog>',
+          targetEvent: ev,
+        })
+        .then(function(answer) {
+          $scope.alert = 'You said the information was "' + answer + '".';
+        }, function() {
+          $scope.alert = 'You cancelled the dialog.';
+        });
+      };
+    }]);
+
+    function DialogController($scope, $mdDialog) {
+      $scope.hide = function() {
+        $mdDialog.hide();
+      };
+      $scope.cancel = function() {
+        $mdDialog.cancel();
+      };
+      $scope.answer = function(answer) {
+        $mdDialog.hide(answer);
+      };
+    };
+
+    app.config(function($mdThemingProvider) {
+      var customBlueMap =     $mdThemingProvider.extendPalette('light-blue', {
+        'contrastDefaultColor': 'light',
+        'contrastDarkColors': ['50'],
+        '50': 'ffffff'
+      });
+      $mdThemingProvider.definePalette('customBlue', customBlueMap);
+      $mdThemingProvider.theme('default')
+        .primaryPalette('customBlue', {
+          'default': '500',
+          'hue-1': '50'
+        })
+        .accentPalette('pink');
+      $mdThemingProvider.theme('input', 'default')
+            .primaryPalette('grey')
     });
 
   </script>
