@@ -1,4 +1,5 @@
 import logging
+import re
 from elasticsearch import Elasticsearch
 
 logger = logging.getLogger('stack')
@@ -23,7 +24,7 @@ class Repository(object):
 		return resp
 		
 
-	def search_technologies(self)
+	def search_technologies(self):
 
 		query = {
 		  "size": 0,
@@ -66,14 +67,47 @@ class Repository(object):
 		  }
 		}
 
-		r = Repository({'elasticsearch':'http://104.197.92.45:9200'})
+		list_tech = []
+
+		index = 'knowledge'		
 		data = self.es.search(index=index, body=query, size=0)
 
 		for item in data['aggregations']['sheets']['buckets']:
 			
 			doc_count = item['flow']['buckets'][0]['doc_count']
-			print('%s - %s - %s' % (item['key'], item['flow']['buckets'][0]['key'], doc_count))
+			key = item['key']
+			flow = item['flow']['buckets'][0]['key']
 			
+			
+			doc = {
+				"key": key,
+				"flow" : flow,
+				"count": doc_count,
+				"stack" : []
+			}
+
+			print('%s - %s - %s' % (doc['key'], doc['flow'], doc['count']))
+
 			technologies = item['flow']['buckets'][0]['technologies']['buckets']
 			for tech in technologies:
-				print ('==> %s' % tech['key'])
+				tech_name = tech['key'].lower()
+				tech_key = re.sub('[^a-zA-Z0-9_]', '_', tech_name)
+
+				doc_tech = {
+					"technology" : tech_key,
+					"technologyName": tech_name,
+					"imageUrl" : ( 'https://www.googleapis.com/download/storage/v1/b/tech-gallery-prod/o/%s?&alt=media' % tech_key)
+				}
+
+				stack = doc['stack']
+				stack.append(doc_tech)
+
+				print ('==> %s - %s' % (tech_name, tech_key))
+
+			list_tech.append(doc)
+		return list_tech
+
+r = Repository({'elasticsearch':'http://104.197.92.45:9200'})				
+techs = r.search_technologies()
+print techs
+

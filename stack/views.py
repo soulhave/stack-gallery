@@ -1,6 +1,7 @@
 from flask import render_template
 from stack import app 
 from flask import jsonify
+from repository import Repository
 
 @app.route('/')
 def index():
@@ -11,10 +12,7 @@ def index():
 def json_api(id):
 	print ('Stack id %s' % id)
 
-	pessoas = [
-	{"nome": "Bruno Rocha"},
-	{"nome": "Arjen Lucassen"},
-	{"nome": "Anneke van Giersbergen"},
-	{"nome": "Steven Wilson"}]
+	r = Repository({'elasticsearch':'http://104.197.92.45:9200'})
+	techs = r.search_technologies()
 	
-	return jsonify(pessoas)
+	return jsonify(techs)
