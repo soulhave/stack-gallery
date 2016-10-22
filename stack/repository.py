@@ -1,6 +1,7 @@
 import logging
 import re
 from elasticsearch import Elasticsearch
+from techgallery import TechGallery
 
 logger = logging.getLogger('stack')
 logger.addHandler(logging.NullHandler())
@@ -12,6 +13,7 @@ class Repository(object):
 
 	def __init__(self, config):
 		self.es = Elasticsearch([config['elasticsearch']])	
+		self.tc = TechGallery({'endpoint':'https://tech-gallery.appspot.com/_ah/api/rest/v1'})
 	
 	def search_by_query(self, index, query):
 		"""
@@ -55,6 +57,7 @@ class Repository(object):
 		            "technologies": {
 		              "terms": {
 		                "field": "technology.raw",
+		                "size": 36,
 		                "order": {
 		                  "_count": "desc"
 		                }
@@ -90,24 +93,29 @@ class Repository(object):
 
 			technologies = item['flow']['buckets'][0]['technologies']['buckets']
 			for tech in technologies:
-				tech_name = tech['key'].lower()
-				tech_key = re.sub('[^a-zA-Z0-9_]', '_', tech_name)
+				tech_name = tech['key']
+				tech_key = re.sub('[^a-zA-Z0-9_]', '_', tech_name.lower())
+				image = ( 'https://www.googleapis.com/download/storage/v1/b/tech-gallery-prod/o/%s?&alt=media' % tech_key)
+				
+				#tc_tech = self.tc.technology(tech_key)
+				#if 'image' in tc_tech:
+				#	image = tc_tech['image']
 
 				doc_tech = {
 					"technology" : tech_key,
 					"technologyName": tech_name,
-					"imageUrl" : ( 'https://www.googleapis.com/download/storage/v1/b/tech-gallery-prod/o/%s?&alt=media' % tech_key)
+					"imageUrl" : image
 				}
 
 				stack = doc['stack']
 				stack.append(doc_tech)
 
-				print ('==> %s - %s' % (tech_name, tech_key))
+				#print ('==> %s - %s' % (tech_name, tech_key))
 
 			list_tech.append(doc)
 		return list_tech
 
-r = Repository({'elasticsearch':'http://104.197.92.45:9200'})				
-techs = r.search_technologies()
-print techs
+#r = Repository({'elasticsearch':'http://104.197.92.45:9200'})				
+#techs = r.search_technologies()
+#print techs
 

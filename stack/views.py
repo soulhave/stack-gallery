@@ -8,10 +8,8 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/stack/<id>')
-def json_api(id):
-	print ('Stack id %s' % id)
-
+@app.route('/stack')
+def stack():
 	r = Repository({'elasticsearch':'http://104.197.92.45:9200'})
 	techs = r.search_technologies()
 	

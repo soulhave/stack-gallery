@@ -19,6 +19,7 @@
   
   <!-- Angular Material requires Angular.js Libraries -->
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="https://code.angularjs.org/1.5.5/angular-resource.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
@@ -33,79 +34,24 @@
      * You must include the dependency on 'ngMaterial' 
      */
 
-    var app = angular.module('StarterApp', ['ngMaterial', 'ngMdIcons']);
+    var app = angular.module('StarterApp', ['ngMaterial', 'ngMdIcons', 'ngResource']);
 
     app.config(['$interpolateProvider', function ($interpolateProvider) {
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
     }]);  
 
-    app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog){
+    app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$resource', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $resource){
       $scope.toggleSidenav = function(menuId) {
         $mdSidenav(menuId).toggle();
       };
 
-      $scope.projects = [
-          {
-            flow: 'Cartões_iOS',
-            contract: 'Itaú',
-            skill: 38,
-            stack: [
-              {
-                technology: 'javascript',
-                imageUrl: 'http://img.stackshare.io/service/1209/javascript.jpeg' 
-              },
-              {
-                technology: 'github',
-                imageUrl: 'http://img.stackshare.io/service/27/sBsvBbjY.png' 
-              },
-              {
-                technology: 'elasticsearch',
-                imageUrl: 'https://www.googleapis.com/download/storage/v1/b/tech-gallery-prod/o/elasticsearch?alt=media' 
-              }
-            ]
-          },
-          {
-            flow: 'Pessoa Física',
-            contract: 'Itaú',
-            skill: 98,            
-            stack: [
-              {
-                technology: 'javascript',
-                imageUrl: 'http://img.stackshare.io/service/1209/javascript.jpeg' 
-              },
-              {
-                technology: 'github',
-                imageUrl: 'http://img.stackshare.io/service/27/sBsvBbjY.png' 
-              },
-              {
-                technology: 'elasticsearch',
-                imageUrl: 'https://www.googleapis.com/download/storage/v1/b/tech-gallery-prod/o/elasticsearch?alt=media' 
-              },
-              {
-                technology: 'javascript',
-                imageUrl: 'http://img.stackshare.io/service/1209/javascript.jpeg' 
-              },
-              {
-                technology: 'github',
-                imageUrl: 'http://img.stackshare.io/service/27/sBsvBbjY.png' 
-              }, 
-              {
-                technology: 'javascript',
-                imageUrl: 'http://img.stackshare.io/service/1209/javascript.jpeg' 
-              },
-              {
-                technology: 'github',
-                imageUrl: 'http://img.stackshare.io/service/27/sBsvBbjY.png' 
-              }
-            ]
-          },
-          {
-            flow: 'ICCD',
-            contract: 'Itaú',
-            skill: 55,
-          }
-        ];
+      var StackApi = $resource('stack');
+
+      StackApi.query(function(projects){
+        $scope.projects = projects;         
+      });
+
 
       $scope.alert = '';
       

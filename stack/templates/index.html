@@ -46,51 +46,52 @@
       </md-toolbar>
 
 
-      <md-content class="md-padding" layout-xs="column" layout="row">
+      <md-content class="md-padding" layout="row">
+        <div style="width: 1152px;  display: block;">
+          <div class="stack-card" ng-repeat="item in projects">
 
-<div ng-repeat="item in projects">
+                <md-card style="width: 265px; height: 400px">
+                    <md-card-title>
+                      <md-card-title-text>
+                        <span class="md-headline">[[item.flow]]</span>
+                        <span class="md-subhead">[[item.contract]]</span>
+                      </md-card-title-text>
+                    </md-card-title>
+                    <div>
+                      <md-progress-linear class="md-accent md-default-theme" md-mode="determinate" value="[[item.skill]]" aria-valuemin="0" aria-valuemax="100" role="progressbar" aria-valuenow="99">
+                        <div class="md-container md-mode-determinate">
+                          <div class="md-dashed"></div>
+                          <div class="md-bar md-bar1"></div>
+                          <div class="md-bar md-bar2" style="transform: translateX(-31%) scale(0.38, 1);"></div>
+                        </div>  
+                      </md-progress-linear>            
+                    </div> 
+                    <md-card-content layout="row" layout-align="space-between">
+                      <div style="height: 220px">          
+                        <span ng-repeat="tech in item.stack">
+                          <a class="stack-service-logo" href="https://techgallery.ciandt.com/#/technologies/[[tech.technology]]" data-hing="[[tech.technology]">
+                            <img alt="[[tech.technologyName]]" title="[[tech.technologyName]]" src="[[tech.imageUrl]]">
+                          </a>
+                        </span>  
+                      </div>     
+                    </md-card-content>  
+                    
+                    </md-card-actions>
+                      <md-card-actions layout="row">
+                        <md-button class="md-icon-button" aria-label="Favorite">
+                          <md-icon>favorite</md-icon>
+                        </md-button>
+                        <md-button class="md-icon-button" aria-label="Settings">
+                          <md-icon>menu</md-icon>
+                        </md-button>
+                        <md-button class="md-icon-button" aria-label="Share">
+                          <md-icon>share-arrow</md-icon>
+                        </md-button>                    
+                      </md-card-actions>           
 
-      <md-card style="width: 265px">
-          <md-card-title>
-            <md-card-title-text>
-              <span class="md-headline">[[item.flow]]</span>
-              <span class="md-subhead">[[item.contract]]</span>
-            </md-card-title-text>
-          </md-card-title>
-          <div>
-            <md-progress-linear class="md-accent md-default-theme" md-mode="determinate" value="[[item.skill]]" aria-valuemin="0" aria-valuemax="100" role="progressbar" aria-valuenow="99">
-              <div class="md-container md-mode-determinate">
-                <div class="md-dashed"></div>
-                <div class="md-bar md-bar1"></div>
-                <div class="md-bar md-bar2" style="transform: translateX(-31%) scale(0.38, 1);"></div>
-              </div>  
-            </md-progress-linear>            
-          </div> 
-          <md-card-content layout="row" layout-align="space-between">
-            <div>          
-              <span ng-repeat="tech in item.stack">
-                <a class="stack-service-logo" href="/[[tech.technology]" data-hing="[[tech.technology]">
-                  <img alt="Javascript" src="[[tech.imageUrl]]">
-                </a>
-              </span>  
-            </div>     
-          </md-card-content>  
-          
-          </md-card-actions>
-            <md-card-actions layout="row">
-              <md-button class="md-icon-button" aria-label="Favorite">
-                <md-icon>favorite</md-icon>
-              </md-button>
-              <md-button class="md-icon-button" aria-label="Settings">
-                <md-icon>menu</md-icon>
-              </md-button>
-              <md-button class="md-icon-button" aria-label="Share">
-                <md-icon>share-arrow</md-icon>
-              </md-button>                    
-            </md-card-actions>           
-
-        </md-card> 
-</div>          
+                  </md-card> 
+          </div>   
+        </div>       
 
       </md-content>
   </body>
