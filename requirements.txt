@@ -1,2 +1,4 @@
 flask
+requests
+elasticsearch
 flask_oauth

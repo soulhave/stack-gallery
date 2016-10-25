@@ -29,7 +29,6 @@ class Repository(object):
 		
 		return resp
 		
-
 	def search_stack(self):
 		index = 'stack'		
 		data = self.es.search(index=index, body={"query": {"match_all": {}}}, size=2500, sort='tkci:desc')
@@ -38,8 +37,6 @@ class Repository(object):
 			list_stack.append(item['_source'])
 
 		return list_stack
-
-
 
 	def search_technologies(self):
 
@@ -61,39 +58,36 @@ class Repository(object):
 		        }
 		      },
 		      "aggs": {
-		        "flow": {
+		        "contract": {
 		          "terms": {
-		            "field": "flow.raw",
+		            "field": "contract.raw",
 		            "order": {
 		              "_count": "desc"
 		            }
 		          },
-                  "aggs": {
-                    "tkci": {
-                      "sum": {
-                        "field": "skill_index"
-                      }
-                    }
-                  }                  
+			      "aggs": {
+			        "flow": {
+			          "terms": {
+			            "field": "flow.raw",
+			            "order": {
+			              "_count": "desc"
+			            }
+			          },
+		              "aggs": {
+		                "tkci": {
+		                  "sum": {
+		                    "field": "skill_index"
+		                  }
+		                }
+		              }                       
+			        }
+			      }                  
 		        }
 		      }
 		    }
 		  }
 		}
 
-		"""
-                  "aggs": {
-                    "tkci": {
-                        "terms": {
-                          "field": "contract.raw",
-                          "size": 5,
-                          "order": {
-                            "_term": "desc"
-                            }
-                          }
-                    }
-                  } 
-		"""
 
 		projects = []
 
@@ -102,19 +96,22 @@ class Repository(object):
 
 		for item in data['aggregations']['sheets']['buckets']:
 			
-			doc_count = item['flow']['buckets'][0]['doc_count']
+			doc_count = item['doc_count']
 			key = item['key']
-			flow = item['flow']['buckets'][0]['key']
-			tkci = item['flow']['buckets'][0]['tkci']['value']
-			
-			
+			contract = item['contract']['buckets'][0]
+			flow = contract['flow']['buckets'][0]
+			tkci = flow['tkci']['value']
+						
 			doc = {
 				"key": key,
-				"flow" : flow,
+				"contract" : contract['key'],
+				"flow" : flow['key'],
 				"count": doc_count,
 				"tkci" : tkci,
 				"stack" : []
 			}
+
+			#print doc
 
 			#print('%s - %s - %s' % (doc['key'], doc['flow'], tkci))
 			projects.append(doc)

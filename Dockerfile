@@ -12,6 +12,8 @@ COPY server.py /app
 ADD stack /app/stack
 
 RUN pip install flask
+RUN pip install requests
+RUN pip install elasticsearch
 
 WORKDIR /app
 # not work

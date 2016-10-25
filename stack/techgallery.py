@@ -13,11 +13,11 @@ class TechGallery(object):
 		self.config = config
 		self.endpoint = config['endpoint']
 
-	def searchTechnologiesByLogin(self, login):
+	def profile(self, login):
 		url = '%s/profile?email=%s@ciandt.com' %(self.endpoint,login)
 		response = requests.get(url=url)
-
-		return response;
+		# TODO: throw exception if response.status_code <> 200
+		return response.json();
 
 	def technology(self, id):
 		url = '%s/technology/%s' %(self.endpoint,id)
