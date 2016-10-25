@@ -28,7 +28,7 @@ class Repository(object):
 		logger.debug("%d documents found" % resp['hits']['total'])
 		
 		return resp
-		
+
 	def search_stack(self):
 		index = 'stack'		
 		data = self.es.search(index=index, body={"query": {"match_all": {}}}, size=2500, sort='tkci:desc')
@@ -36,7 +36,7 @@ class Repository(object):
 		for item in data['hits']['hits']:
 			list_stack.append(item['_source'])
 
-		return list_stack
+		return list_stack		
 
 	def search_technologies(self):
 
@@ -116,6 +116,36 @@ class Repository(object):
 			#print('%s - %s - %s' % (doc['key'], doc['flow'], tkci))
 			projects.append(doc)
 		return projects
+
+
+	def list_team(self, sheet_id):
+
+		query = {
+		    "query": {"match": {
+		       "sheet_id": sheet_id
+		    }}
+		}
+
+		team = []
+
+		index = 'project'		
+		data = self.es.search(index=index, body=query, size=1)
+
+		for project in data['hits']['hits']:
+			item = project['_source']
+
+			if 'team' in item:
+				for login in item['team']:
+					doc = {
+						"login" : login,
+						"name": 'nome completo',
+						"email": '%s@ciandt.com'%login,
+						"image": "http://citweb.cit.com.br/ipeople/photo?cdLogin=%s"%login
+					}
+
+					team.append(doc)
+
+		return team
 
 
 
