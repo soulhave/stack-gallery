@@ -31,15 +31,12 @@ class Repository(object):
 		
 
 	def search_stack(self):
-		print('start')
 		index = 'stack'		
 		data = self.es.search(index=index, body={"query": {"match_all": {}}}, size=2500, sort='tkci:desc')
-		print('searched')
 		list_stack = []
 		for item in data['hits']['hits']:
 			list_stack.append(item['_source'])
 
-		print('returned')
 		return list_stack
 
 
@@ -73,6 +70,20 @@ class Repository(object):
 		          },
                   "aggs": {
                     "tkci": {
+                      "sum": {
+                        "field": "skill_index"
+                      }
+                    }
+                  }                  
+		        }
+		      }
+		    }
+		  }
+		}
+
+		"""
+                  "aggs": {
+                    "tkci": {
                         "terms": {
                           "field": "contract.raw",
                           "size": 5,
@@ -81,12 +92,8 @@ class Repository(object):
                             }
                           }
                     }
-                  }                  
-		        }
-		      }
-		    }
-		  }
-		}
+                  } 
+		"""
 
 		projects = []
 
