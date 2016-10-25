@@ -15,8 +15,6 @@ class TechGallery(object):
 
 	def searchTechnologiesByLogin(self, login):
 		url = '%s/profile?email=%s@ciandt.com' %(self.endpoint,login)
-		# sample url 'https://tech-gallery.appspot.com/_ah/api/rest/v1/profile?email='+ login + '@ciandt.com'
-
 		response = requests.get(url=url)
 
 		return response;

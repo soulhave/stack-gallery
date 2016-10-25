@@ -11,6 +11,6 @@ def index():
 @app.route('/stack')
 def stack():
 	r = Repository({'elasticsearch':'http://104.197.92.45:9200'})
-	techs = r.search_technologies()
+	techs = r.search_stack()
 	
 	return jsonify(techs)
