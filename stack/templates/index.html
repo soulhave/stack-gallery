@@ -50,11 +50,11 @@
       <md-content class="md-padding" layout="row" layout-wrap>
 
         <div class="stack-card" ng-repeat="item in projects">
-              <md-card style="width: 265px; height: 400px">
+              <md-card style="width: 265px; height: 420px">
                   <!-- stack title -->
                   <md-card-title>
                     <md-card-title-text>
-                      <md-button ng-href="[[item.key]]">[[item.flow]]</md-button>
+                      <md-button target="_blank" ng-href="https://docs.google.com/spreadsheets/d/[[item.key]]">[[item.flow]]</md-button>
                       <span class="md-subhead">[[item.contract]]</span>
                     </md-card-title-text>
                   </md-card-title>
@@ -79,16 +79,19 @@
                   </md-card-content>  
                   <!-- stack actions-->
                   </md-card-actions>
-                    <md-card-actions layout="row">
-                      <md-button class="md-icon-button" aria-label="Favorite">
-                        <md-icon>favorite</md-icon>
+                    <md-card-actions layout="row" style="padding-top:30px">
+                    <!--
+                      <button class="md-icon-button badge1" data-badge="6">
+                        <md-icon style="color: #f00">favorite</md-icon>
+                      </button>                      
+                      -->
+                      <md-button  style="overflow: inherit;" class="md-icon-button badge1" data-badge="[[item.like_count]]" aria-label="Favorite" ng-click="like(item)">
+                        <md-icon ng-class="item.like_count > 0 ? 'selected' : 'normal'" aria-label="Favorite">favorite</md-icon>
                       </md-button>
-                      <md-button class="md-icon-button" aria-label="Settings" ng-click=showTeam($event)>
+
+                      <md-button class="md-icon-button" aria-label="People" ng-click="showTeam($event, item.key)">
                         <md-icon>people</md-icon>
-                      </md-button>
-                      <md-button class="md-icon-button" aria-label="Share" ng-click="showAdd($event)">
-                        <md-icon>share</md-icon>
-                      </md-button>                    
+                      </md-button>                   
                     </md-card-actions>
                 </md-card>
         </div>

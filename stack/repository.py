@@ -34,6 +34,8 @@ class Repository(object):
 		data = self.es.search(index=index, body={"query": {"match_all": {}}}, size=2500, sort='tkci:desc')
 		list_stack = []
 		for item in data['hits']['hits']:
+			stack = item['_source']
+			stack['like_count'] = 0
 			list_stack.append(item['_source'])
 
 		return list_stack		
@@ -140,7 +142,7 @@ class Repository(object):
 						"login" : login,
 						"name": 'nome completo',
 						"email": '%s@ciandt.com'%login,
-						"image": "http://citweb.cit.com.br/ipeople/photo?cdLogin=%s"%login
+						"image": "https://citweb.cit.com.br/ipeople/photo?cdLogin=%s"%login
 					}
 
 					team.append(doc)

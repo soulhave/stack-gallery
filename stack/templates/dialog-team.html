@@ -1,57 +1,27 @@
-<md-dialog aria-label="Mango (Fruit)"> 
+<md-dialog aria-label="Mango (Fruit)" flex="25" ng-controller="AppCtrl"> 
 <md-content class="md-padding"> 
 
-<md-content class="md-padding autocomplete" layout="row" layout-wrap>
-
-    <md-list>
-      <md-subheader class="md-no-sticky">Contacts</md-subheader>
-
 <!--
-      <md-list-item class="md-2-line contact-item" ng-repeat="[[item in team]]">
+<md-list>
+      <md-list-item class="md-2-line contact-item" ng-repeat="item in team">
         <img ng-src="[[item.image]]" class="md-avatar" alt="[[item.name]]" />
         <div class="md-list-item-text compact">
           <h3>[[item.name]]</h3>
           <p>[[item.email]]</p>
         </div>
       </md-list-item>
-      -->
+ </md-list>
+  -->
+  <md-grid-list md-cols="3" md-row-height="103px">
+    <md-grid-tile ng-repeat="item in team">
+        <img ng-src="[[item.image]]" layout-fill alt="[[item.name]]"/>
+      <md-grid-tile-footer style="background:rgba(0,0,0,0.40)">
+        <h3>[[item.login]]</h3>
+      </md-grid-tile-footer>
+    </md-grid-tile>
+  </md-grid-list>
 
-      <md-list-item class="md-2-line contact-item" >
-        <img ng-src="http://citweb.cit.com.br/ipeople/photo?cdLogin=andremp" class="md-avatar" alt="Andre" />
-        <div class="md-list-item-text compact">
-          <h3>Andre Dede</h3>
-          <p>andremp@ciandt.com</p>
-        </div>
-      </md-list-item>
-
-      <md-list-item class="md-2-line contact-item" >
-        <img ng-src="http://citweb.cit.com.br/ipeople/photo?cdLogin=andremp" class="md-avatar" alt="Andre" />
-        <div class="md-list-item-text compact">
-          <h3>Andre Dede</h3>
-          <p>andremp@ciandt.com</p>
-        </div>
-      </md-list-item>    
-
-      <md-list-item class="md-2-line contact-item" >
-        <img ng-src="http://citweb.cit.com.br/ipeople/photo?cdLogin=andremp" class="md-avatar" alt="Andre" />
-        <div class="md-list-item-text compact">
-          <h3>Andre Dede</h3>
-          <p>andremp@ciandt.com</p>
-        </div>
-      </md-list-item>
-
-      <md-list-item class="md-2-line contact-item" >
-        <img ng-src="http://citweb.cit.com.br/ipeople/photo?cdLogin=andremp" class="md-avatar" alt="Andre" />
-        <div class="md-list-item-text compact">
-          <h3>Andre Dede</h3>
-          <p>andremp@ciandt.com</p>
-        </div>
-      </md-list-item>         
-
-    </md-list>
-
-
-</md-content> 
+</md-content>
   <div class="md-actions" layout="row"> 
     <span flex>	</span> 
     <md-button ng-click="hide()"> Cancel </md-button>  

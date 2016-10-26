@@ -48,43 +48,49 @@
       };
 
       var StackApi = $resource('stack');
-
       StackApi.query(function(projects){
         $scope.projects = projects;         
       });
 
+      $scope.likeCount = 2
 
-      $scope.alert = '';
+      $scope.like = function(item) {
+        item.like_count += 1
+        console.log('TODO: async call to update like action' + item.key)
+      }
 
-      $scope.showTeam = function(ev) {
+      $scope.showTeam = function(ev, stack_id) {
+
+      // GET team for stack id
+      url = 'team/' + stack_id
+      var TeamApi = $resource(url);
+      TeamApi.query(function(data){
         $mdDialog.show({
           controller: DialogController,
           templateUrl: 'dialog-team',
           targetEvent: ev,
+          locals : {team : data},
+          clickOutsideToClose: true,
+          escapeToClose: true
         })
         .then(function(answer) {
           $scope.alert = 'You said the information was "' + answer + '".';
         }, function() {
           $scope.alert = 'You cancelled the dialog.';
         });
-      };
-      
-      $scope.showAdd = function(ev) {
-        $mdDialog.show({
-          controller: DialogController,
-          template: '<md-dialog aria-label="Mango (Fruit)"> <md-content class="md-padding"> <form name="userForm"> <div layout layout-sm="column"> <md-input-container flex> <label>First NAME</label> <input ng-model="user.firstName" placeholder="Placeholder text"> </md-input-container> <md-input-container flex> <label>Last Name</label> <input ng-model="theMax"> </md-input-container> </div> <md-input-container flex> <label>Address</label> <input ng-model="user.address"> </md-input-container> <div layout layout-sm="column"> <md-input-container flex> <label>City</label> <input ng-model="user.city"> </md-input-container> <md-input-container flex> <label>State</label> <input ng-model="user.state"> </md-input-container> <md-input-container flex> <label>Postal Code</label> <input ng-model="user.postalCode"> </md-input-container> </div> <md-input-container flex> <label>Biography</label> <textarea ng-model="user.biography" columns="1" md-maxlength="150"></textarea> </md-input-container> </form> </md-content> <div class="md-actions" layout="row"> <span flex></span> <md-button ng-click="answer(\'not useful\')"> Cancel </md-button> <md-button ng-click="answer(\'useful\')" class="md-primary"> Save </md-button> </div></md-dialog>',
-          targetEvent: ev,
-        })
-        .then(function(answer) {
-          $scope.alert = 'You said the information was "' + answer + '".';
-        }, function() {
-          $scope.alert = 'You cancelled the dialog.';
-        });
+      });
+
+        
       };
 
     }]);
 
-    function DialogController($scope, $mdDialog) {
+    function DialogController($scope, $mdDialog, team) {
+
+      console.log(team)
+
+      $scope.team =  team
+
       $scope.hide = function() {
         $mdDialog.hide();
       };
