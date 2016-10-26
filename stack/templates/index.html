@@ -52,21 +52,32 @@
         <div class="stack-card" ng-repeat="item in projects">
               <md-card style="width: 265px; height: 420px">
                   <!-- stack title -->
-                  <md-card-title>
-                    <md-card-title-text>
-                      <md-button target="_blank" ng-href="https://docs.google.com/spreadsheets/d/[[item.key]]">[[item.flow]]</md-button>
-                      <span class="md-subhead">[[item.contract]]</span>
-                    </md-card-title-text>
-                  </md-card-title>
-                  <div>
+
+                  <div layout="row" style="padding-top: 5px" />
+                      <div flex="75" layout="column" />
+                        <md-button target="_blank" ng-href="https://docs.google.com/spreadsheets/d/[[item.key]]">[[item.flow]]</md-button>
+                        <span>[[item.contract]]</span>
+                      </div>
+                      <div flex="25" style="padding-top: 10px">
+                        <md-progress-circular md-mode="determinate" value="[[item.tkci * 100]]" md-diameter="50"></md-progress-circular>
+                        <span class="tkci">[[convert_tkci(item.tkci)]]</span>
+                      </div>
+
+                  </div> 
+                  
+                  <md-divider></md-divider>
+
+
+                  <!--
                     <md-progress-linear class="md-accent md-default-theme" md-mode="determinate" value="[[item.tkci * 100]]" aria-valuemin="0" aria-valuemax="100" role="progressbar" aria-valuenow="99">
                       <div class="md-container md-mode-determinate">
                         <div class="md-dashed"></div>
                         <div class="md-bar md-bar1"></div>
                         <div class="md-bar md-bar2" style="transform: translateX(-31%) scale(0.38, 1);"></div>
                       </div>  
-                    </md-progress-linear>            
-                  </div> 
+                    </md-progress-linear> 
+                    -->           
+
                   <!-- stack images: list of technlogies--> 
                   <md-card-content layout="row" layout-align="space-between">
                     <div style="height: 235px; overflow:hidden;">          

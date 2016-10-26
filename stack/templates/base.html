@@ -31,6 +31,7 @@
   
   <!-- Your application bootstrap  -->
   <script type="text/javascript">    
+
     /**
      * You must include the dependency on 'ngMaterial' 
      */
@@ -53,6 +54,10 @@
       });
 
       $scope.likeCount = 2
+
+      $scope.convert_tkci = function (index) {
+        return parseInt(index *100) + '%'
+      }      
 
       $scope.like = function(item) {
         item.like_count += 1

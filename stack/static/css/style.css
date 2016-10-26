@@ -12,6 +12,14 @@
   color:#F12938!important
 }
 
+.tkci {
+   position:relative;
+   top:-468px;
+   right:-13px;
+   font-size:.7em;
+   color:gray;
+}
+
 .badge1 {
    position:relative;
     background-color: Transparent;
