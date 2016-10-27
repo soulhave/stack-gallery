@@ -12,12 +12,9 @@
   color:#F12938!important
 }
 
-.tkci {
-   position:relative;
-   top:-468px;
-   right:-13px;
-   font-size:.7em;
-   color:gray;
+.logo {
+  width: 24px; 
+  height: 24px;
 }
 
 .badge1 {

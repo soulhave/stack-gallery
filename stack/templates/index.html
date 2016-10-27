@@ -6,43 +6,39 @@
   <body layout="row" ng-controller="AppCtrl">
 
     <div layout="column" class="relative" layout-fill role="main">
-      <!--
-      <md-button class="md-fab md-fab-bottom-right" aria-label="Add">
-        <ng-md-icon icon="add"></ng-md-icon>
-      </md-button>
-      -->
       <md-toolbar ng-show="!showSearch">
         <div class="md-toolbar-tools">
-          <!-- hide-gt-md -->
           <md-button class="md-icon-button"  aria-label="Menu" ng-click="toggleSidenav('left')">
-            <md-icon>menu</md-icon>
+            <img class="logo" src="{{ url_for('static', filename='icon/logo_black.png') }}" >
           </md-button>          
           <h3>
             Stack
           </h3>
           <span flex></span>
+          <!--
           <md-button aria-label="Search" ng-click="showSearch = !showSearch">
             <ng-md-icon icon="search"></ng-md-icon>
           </md-button>
+          -->        
         </div>
       </md-toolbar>
       <md-toolbar class="md-hue-1" ng-show="showSearch">
         <div class="md-toolbar-tools">
-          <md-button ng-click="showSearch = !showSearch" aria-label="Back">
-            <ng-md-icon icon="arrow_back"></ng-md-icon>
-          </md-button>
+          <md-button class="md-icon-button"  aria-label="Menu" ng-click="toggleSidenav('left')">
+            <img class="logo" src="{{ url_for('static', filename='icon/logo_black.png') }}">
+          </md-button>            
           <h3 flex="10">
-            Back
+            Stack
           </h3>
           <md-input-container md-theme="input" flex>
             <label>&nbsp;</label>
-            <input ng-model="search" placeholder="enter search">
+            <input id='search_input' ng-model="search" placeholder="enter search" autofocus>
           </md-input-container>
           <md-button aria-label="Search">
             <ng-md-icon icon="search"></ng-md-icon>
           </md-button>
-          <md-button aria-label="Show Search Tips" ng-click="showHelpDialog($event)">
-            <ng-md-icon icon="help"></ng-md-icon>
+          <md-button ng-click="showSearch = !showSearch" aria-label="Back">
+            <ng-md-icon icon="close"></ng-md-icon>
           </md-button>
         </div>
       </md-toolbar>
@@ -54,9 +50,11 @@
                   <!-- stack title -->
 
                   <div layout="row" style="padding-top: 5px" />
-                      <div flex="75" layout="column" />
+                      <div flex layout="column" />
                         <md-button target="_blank" ng-href="https://docs.google.com/spreadsheets/d/[[item.key]]">[[item.flow]]</md-button>
-                        <span>[[item.contract]]</span>
+                        <div layout="row" layout-align="center end" >
+                          <span style="font-size: 14px">[[item.contract]]</span>
+                        </div>                        
                       </div>
                       <!--
                       <div flex="25" style="padding-top: 10px">
@@ -68,20 +66,9 @@
                   
                   <md-divider></md-divider>
 
-
-                  <!--
-                    <md-progress-linear class="md-accent md-default-theme" md-mode="determinate" value="[[item.tkci * 100]]" aria-valuemin="0" aria-valuemax="100" role="progressbar" aria-valuenow="99">
-                      <div class="md-container md-mode-determinate">
-                        <div class="md-dashed"></div>
-                        <div class="md-bar md-bar1"></div>
-                        <div class="md-bar md-bar2" style="transform: translateX(-31%) scale(0.38, 1);"></div>
-                      </div>  
-                    </md-progress-linear> 
-                    -->           
-
                   <!-- stack images: list of technlogies--> 
                   <md-card-content layout="row" layout-align="space-between">
-                    <div style="height: 235px; overflow:hidden;">          
+                    <div style="height: 269px; overflow:hidden;">          
                       <span ng-repeat="tech in item.stack">
                         <a class="stack-service-logo" href="https://techgallery.ciandt.com/#/technologies/[[tech.technology]]" target="_blank" data-hing="[[tech.technology]">
                           <img alt="[[tech.technologyName]]" title="[[tech.technologyName]]" src="[[tech.imageUrl]]">
@@ -91,16 +78,12 @@
                   </md-card-content>  
                   <!-- stack actions-->
                   </md-card-actions>
-                    <md-card-actions layout="row" style="padding-top:30px">
-                    <!--
-                      <button class="md-icon-button badge1" data-badge="6">
-                        <md-icon style="color: #f00">favorite</md-icon>
-                      </button>                      
-                      -->
+                    <md-card-actions layout="row" style="padding-top:10px">
+                      <!--
                       <md-button  style="overflow: inherit;" class="md-icon-button badge1" data-badge="[[item.like_count]]" aria-label="Favorite" ng-click="like(item)">
                         <md-icon ng-class="item.like_count > 0 ? 'selected' : 'normal'" aria-label="Favorite">favorite</md-icon>
                       </md-button>
-
+                      -->
                       <md-button class="md-icon-button" aria-label="People" ng-click="showTeam($event, item.key)">
                         <md-icon>people</md-icon>
                       </md-button>                   

@@ -33,3 +33,7 @@ Infinite scroll for list of stack
 Left slidebar that shows terms enable for filter
   - All contact
   - Top 10 technologies
+
+Add favorite button card. 
+
+Add github fork me ribbon on right top  
