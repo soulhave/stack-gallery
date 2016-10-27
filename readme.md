@@ -1,6 +1,6 @@
 # Stack Gallery
 
-Stac is a tool that shows technology used in your product. There is a strong integration with [Tech Gallery][techgallery] and [Knowledge Map][knowledge]
+Stack is a tool that shows technology used in your product. There is a strong integration with [Tech Gallery][techgallery] and [Knowledge Map][knowledge]
 
 ![screenshot from 2016-10-27 13-02-19](https://cloud.githubusercontent.com/assets/6742877/19772643/9f616ca0-9c45-11e6-96bb-43809f7509df.png)
 
@@ -42,8 +42,8 @@ $ docker run -d -p 5000:5000 stack-app
 
 The application will be accessible at http:127.0.0.1:5000
 
-[techgallery][https://github.com/ciandt-dev/tech-gallery]
-[knowledge] https://github.com/marcuslacerda/tech-gallery-knowledgemap
+[techgallery]: https://github.com/ciandt-dev/tech-gallery
+[knowledge]: https://github.com/marcuslacerda/tech-gallery-knowledgemap
 [Git]: http://help.github.com/set-up-git-redirect
 [Python]: https://www.python.org
 [Pull requests]: https://help.github.com/categories/collaborating-on-projects-using-issues-and-pull-requests/
