@@ -11,17 +11,14 @@ def index():
 def dialog_team():
     return render_template('dialog-team.html')
 
-@app.route('/stack')
+@app.route('/stack', methods = ['GET'])
 def stack():
 	r = Repository({'elasticsearch':'http://104.197.92.45:9200'})
-	techs = r.search_stack()
+	techs = r.list_stack()
 	
 	return jsonify(techs)
 
-
-@app.route('/team/<sheet_id>')
+@app.route('/team/<sheet_id>', methods = ['GET'])
 def team(sheet_id):
 	r = Repository({'elasticsearch':'http://104.197.92.45:9200'})
-	team = r.list_team(sheet_id)
-	
-	return jsonify(team)	
+	team = r.list_team(sheet_id)    

@@ -13,3 +13,4 @@ app.jinja_env.globals['static'] = (
 )
 
 from stack import views
+from stack import api

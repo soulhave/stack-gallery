@@ -29,7 +29,7 @@ class Repository(object):
 		
 		return resp
 
-	def search_stack(self):
+	def list_stack(self):
 		index = 'stack'		
 		data = self.es.search(index=index, body={"query": {"match_all": {}}}, size=2500, sort='tkci:desc')
 		list_stack = []
@@ -39,6 +39,35 @@ class Repository(object):
 			list_stack.append(item['_source'])
 
 		return list_stack		
+
+	def list_team(self, sheet_id):
+
+		query = {
+		    "query": {"match": {
+		       "sheet_id": sheet_id
+		    }}
+		}
+
+		team = []
+
+		index = 'project'		
+		data = self.es.search(index=index, body=query, size=1)
+
+		for project in data['hits']['hits']:
+			item = project['_source']
+
+			if 'team' in item:
+				for login in item['team']:
+					doc = {
+						"login" : login,
+						"name": 'nome completo',
+						"email": '%s@ciandt.com'%login,
+						"image": "https://citweb.cit.com.br/ipeople/photo?cdLogin=%s"%login
+					}
+
+					team.append(doc)
+
+		return team		
 
 	def search_technologies(self):
 
@@ -120,38 +149,7 @@ class Repository(object):
 		return projects
 
 
-	def list_team(self, sheet_id):
-
-		query = {
-		    "query": {"match": {
-		       "sheet_id": sheet_id
-		    }}
-		}
-
-		team = []
-
-		index = 'project'		
-		data = self.es.search(index=index, body=query, size=1)
-
-		for project in data['hits']['hits']:
-			item = project['_source']
-
-			if 'team' in item:
-				for login in item['team']:
-					doc = {
-						"login" : login,
-						"name": 'nome completo',
-						"email": '%s@ciandt.com'%login,
-						"image": "https://citweb.cit.com.br/ipeople/photo?cdLogin=%s"%login
-					}
-
-					team.append(doc)
-
-		return team
-
-
-
-	def list_stack(self, sheet_id):
+	def list_projects(self, sheet_id):
 
 		query = {
 		    "query": {"match": {
