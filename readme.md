@@ -16,15 +16,6 @@ $ cd stack-gallery
 $ python server.py
 ```
 
-If you want a full local enviroment, you will need to start [Elasticsearch] and change elasticsearch host on config.yaml file 
-
-```console
-$ run docker -p 9200:9200 elasticsearch
-```
-
-You can override this endpoint using this variables
-
-
 ## Running (by docker)
 
 Build the image using the following command
@@ -37,10 +28,18 @@ $ docker build -t stack-app:latest .
 Run the Docker container using the command shown below.
 
 ```console
-$ docker run -d -p 5000:5000 stack-app
+$ docker run -e ELASTICSEARCH_URL=http://localhost:9200 -p 5000:5000 stack-app
 ```
 
-The application will be accessible at http:127.0.0.1:5000
+You must define ELASTICSEARCH_URL environment variable.
+
+If you want a full local enviroment, you will need to start [Elasticsearch] and change elasticsearch host on config.yaml file 
+
+```console
+$ run docker -p 9200:9200 elasticsearch
+```
+
+The application will be accessible at http://localhost:5000
 
 [techgallery]: https://github.com/ciandt-dev/tech-gallery
 [knowledge]: https://github.com/marcuslacerda/tech-gallery-knowledgemap
