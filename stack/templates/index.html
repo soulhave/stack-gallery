@@ -15,11 +15,10 @@
             Stack
           </h3>
           <span flex></span>
-          <!--
           <md-button aria-label="Search" ng-click="showSearch = !showSearch">
             <ng-md-icon icon="search"></ng-md-icon>
           </md-button>
-          -->        
+       
         </div>
       </md-toolbar>
       <md-toolbar class="md-hue-1" ng-show="showSearch">
@@ -32,9 +31,9 @@
           </h3>
           <md-input-container md-theme="input" flex>
             <label>&nbsp;</label>
-            <input id='search_input' ng-model="search" placeholder="enter search" autofocus>
+            <input id='search_input' ng-model="input" placeholder="enter search" autofocus>
           </md-input-container>
-          <md-button aria-label="Search">
+          <md-button aria-label="Search" ng-click='search()'>
             <ng-md-icon icon="search"></ng-md-icon>
           </md-button>
           <md-button ng-click="showSearch = !showSearch" aria-label="Back">

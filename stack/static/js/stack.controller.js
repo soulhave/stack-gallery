@@ -1,11 +1,30 @@
 app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$resource', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $resource){
-  $scope.toggleSidenav = function(menuId) {
-    $mdSidenav(menuId).toggle();
-  };
 
-  var StackApi = $resource('stack');
-  StackApi.query(function(projects){
-    $scope.projects = projects;         
+  $scope.input = ''
+
+  $scope.search = function() {
+
+    q = $scope.input
+    if (q == '' || q == null) {
+      q = "*"
+    }
+
+    Stack.search({ q: q }, function(data){
+      $scope.projects = data;
+    });
+};
+
+  var Stack = $resource('api/stack/:action', 
+      { q : '@q' }, 
+      {
+        list : { method : 'GET', isArray: true },
+        search : { method : 'GET', params : {action : 'search'}, isArray: true }
+      }
+  );
+
+  //var StackApi = $resource('stack');
+  Stack.list(function(data){
+    $scope.projects = data;         
   });
 
   $scope.showTeam = function(ev, stack_id) {
@@ -36,6 +55,10 @@ app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog',
     item.like_count += 1
     console.log('TODO: async call to update like action' + item.key)
   }  
+
+  $scope.toggleSidenav = function(menuId) {
+    $mdSidenav(menuId).toggle();
+  };  
 
 }]);
 

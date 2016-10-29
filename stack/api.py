@@ -3,21 +3,30 @@ from flask import jsonify
 from elasticsearch import Elasticsearch
 from flask import request
 from stack import es_host
+import logging
+
+logger = logging.getLogger('stack')
 
 config = {'elasticsearch':es_host}
 
-@app.route('/stack', methods = ['GET'])
+@app.route('/api/stack/', methods = ['GET'])
 def api_stack():
 	r = Database(config)
-	stacks = r.list_stack()
 	
-	return jsonify(stacks)
+	return jsonify(r.list_stack())
 
+@app.route('/api/stack/search', methods = ['GET'])
+def api_stack_search():
+	r = Database(config)
+	q = request.args.get('q')
+
+	return jsonify(r.search_stack(q))
 
 @app.route('/stack/<id>', methods = ['GET'])
 def api_stack_id(id):
 	r = Database(config)
 	source = request.args.get('_source')
+
 	return jsonify(r.get_stack(id, source))
 
 @app.route('/stack/<id>', methods = ['POST'])
@@ -50,10 +59,28 @@ class Database(object):
 		"""
 		Sample of query: {"query": {"match_all": {}}}
 		"""
-		resp = self.es.search(index=index, body=query, size=0)
+		resp = self.es.search(index=index, body=query, size=2500)
 		logger.debug("%d documents found" % resp['hits']['total'])
 		
 		return resp
+
+	def search_stack(self, q):
+		query = {
+		    "query": {
+		        "query_string": {
+		           "query": q
+		        }        
+		    }
+		}
+		logger.debug('query %s' % query) 
+
+		data = self.search_by_query('stack', query)
+		list_stack = []
+		for item in data['hits']['hits']:
+			list_stack.append(item['_source'])
+
+		return list_stack
+
 
 	def list_stack(self):
 		index = 'stack'
