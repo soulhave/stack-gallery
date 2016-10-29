@@ -15,7 +15,7 @@ class Repository(object):
 		self.es = Elasticsearch([config['elasticsearch']])	
 		self.tc = TechGallery({'endpoint':'https://tech-gallery.appspot.com/_ah/api/rest/v1'})
 	
-	def search_technologies(self):
+	def list_projects(self):
 
 		query = {
 		  "size": 0,
@@ -81,11 +81,9 @@ class Repository(object):
 						
 			doc = {
 				"key": key,
-				"contract" : contract['key'],
-				"flow" : flow['key'],
-				"count": doc_count,
-				"tkci" : tkci,
-				"stack" : []
+				"owner" : contract['key'],
+				"name" : flow['key'],
+				"index" : tkci
 			}
 
 			#print doc
@@ -95,7 +93,7 @@ class Repository(object):
 		return projects
 
 
-	def list_projects(self, sheet_id):
+	def list_stack(self, sheet_id):
 
 		query = {
 		    "query": {"match": {
@@ -116,15 +114,13 @@ class Repository(object):
 				for tech in item['stack']:
 					tech_name = tech
 					tech_key = re.sub('[#/ ]', '_', re.sub('[^\x00-\x7F]', '_', re.sub('[.]', '', tech_name.lower())))
-					image = ( 'https://www.googleapis.com/download/storage/v1/b/tech-gallery-prod/o/%s?&alt=media' % tech_key)
+					image = 'https://techgallery.ciandt.com/assets/images/placeholder.png'
 					
 					## workaround: techgallery image has no pattern for url name
 					tc_tech = self.tc.technology(tech_key)
 					if 'image' in tc_tech:
-						print tc_tech['image']						
+						logger.debug(tc_tech['image'])
 						image = tc_tech['image']
-					else: 
-						image = 'https://techgallery.ciandt.com/assets/images/placeholder.png'
 
 					doc_tech = {
 						"technology" : tech_key,
@@ -136,3 +132,43 @@ class Repository(object):
 			else: 
 				print 'ERROR =>  project with no stack'
 			return stack
+
+	def list_team(self, sheet_id):
+
+		query = {
+		    "query": {"match": {
+		       "sheet_id": sheet_id
+		    }}
+		}
+
+		team = []
+
+		index = 'project'		
+		data = self.es.search(index=index, body=query, size=1)
+
+		for project in data['hits']['hits']:
+			item = project['_source']
+
+			logger.debug(item)
+
+			if 'team' in item:
+				for login in item['team']:
+					doc = {
+						"login" : login,
+						"name": 'nome completo',
+						"email": '%s@ciandt.com'%login,
+						"image": "https://citweb.cit.com.br/ipeople/photo?cdLogin=%s"%login
+					}
+
+					team.append(doc)
+
+		return team	
+
+	def save_document(self, index, doc_type, document, id=None):
+		res = self.es.index(index=index, doc_type=doc_type, body=document, id=id)
+		logger.info("Created documento ID %s" % res['_id'])
+
+
+	def exists(self, index, doc_type, id):
+		return self.es.exists(index=index, doc_type=doc_type, id=id)
+

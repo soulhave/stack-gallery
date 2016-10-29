@@ -2,7 +2,7 @@
 
 Stack is a tool that shows technology used in your product. There is a strong integration with [Tech Gallery][techgallery] and [Knowledge Map][knowledge]
 
-![screenshot from 2016-10-27 13-02-19](https://cloud.githubusercontent.com/assets/6742877/19772643/9f616ca0-9c45-11e6-96bb-43809f7509df.png)
+![screenshot from 2016-10-27 13-02-19](https://cloud.githubusercontent.com/assets/6742877/19829377/e83e0b94-9dbd-11e6-84d8-cbad124c8e0f.png)
 
 ## Running (local setup)
 [Git][] and [Python 2.7.9 ][Python]. For Python you need to install the following modules:

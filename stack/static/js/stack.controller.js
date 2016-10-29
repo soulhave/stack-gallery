@@ -8,47 +8,38 @@ app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog',
     $scope.projects = projects;         
   });
 
-  $scope.likeCount = 2
+  $scope.showTeam = function(ev, stack_id) {
 
-  $scope.convert_tkci = function (index) {
-    return parseInt(index *100) + '%'
-  }      
+    // GET team for stack id
+    url = 'stack/team/' + stack_id
+    var TeamApi = $resource(url);
+    TeamApi.query(function(data){
+      $mdDialog.show({
+        controller: DialogController,
+        templateUrl: 'dialog-team',
+        targetEvent: ev,
+        locals : {team : data},
+        clickOutsideToClose: true,
+        escapeToClose: true
+      })
+      .then(function(answer) {
+        $scope.alert = 'You said the information was "' + answer + '".';
+      }, function() {
+        $scope.alert = 'You cancelled the dialog.';
+      });
+    });  
+  };
+
+  $scope.likeCount = 2
 
   $scope.like = function(item) {
     item.like_count += 1
     console.log('TODO: async call to update like action' + item.key)
-  }
-
-  $scope.showTeam = function(ev, stack_id) {
-
-  // GET team for stack id
-  url = 'team/' + stack_id
-  var TeamApi = $resource(url);
-  TeamApi.query(function(data){
-    $mdDialog.show({
-      controller: DialogController,
-      templateUrl: 'dialog-team',
-      targetEvent: ev,
-      locals : {team : data},
-      clickOutsideToClose: true,
-      escapeToClose: true
-    })
-    .then(function(answer) {
-      $scope.alert = 'You said the information was "' + answer + '".';
-    }, function() {
-      $scope.alert = 'You cancelled the dialog.';
-    });
-  });
-
-    
-  };
+  }  
 
 }]);
 
 function DialogController($scope, $mdDialog, team) {
-
-  console.log(team)
-
   $scope.team =  team
 
   $scope.hide = function() {
