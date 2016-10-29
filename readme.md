@@ -16,6 +16,9 @@ $ cd stack-gallery
 $ python server.py
 ```
 
+You must define ELASTICSEARCH_URL environment variable.
+
+
 ## Running (by docker)
 
 Build the image using the following command
@@ -31,9 +34,7 @@ Run the Docker container using the command shown below.
 $ docker run -e ELASTICSEARCH_URL=http://localhost:9200 -p 5000:5000 stack-app
 ```
 
-You must define ELASTICSEARCH_URL environment variable.
-
-If you want a full local enviroment, you will need to start [Elasticsearch] and change elasticsearch host on config.yaml file 
+If you need a full local enviroment, you must start [Elasticsearch] and change elasticsearch host at ELASTICSEARCH_URL variable
 
 ```console
 $ run docker -p 9200:9200 elasticsearch
