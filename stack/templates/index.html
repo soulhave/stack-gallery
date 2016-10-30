@@ -3,12 +3,12 @@
 {% block body %}
 
   <!-- Container #1 (see wireframe) -->
-  <body layout="row" ng-controller="AppCtrl">
+  <body layout="row" ng-controller="AppCtrl" ng-keyup="keyPress($event)">
 
-    <div layout="column" class="relative" layout-fill role="main">
+    <div layout="column" class="relative" layout-fill role="main" >
       <md-toolbar ng-show="!showSearch">
         <div class="md-toolbar-tools">
-          <md-button class="md-icon-button"  aria-label="Menu" ng-click="toggleSidenav('left')">
+          <md-button class="md-icon-button"  aria-label="Menu" ng-click="searchAll()">
             <img class="logo" src="{{ url_for('static', filename='icon/logo_black.png') }}" >
           </md-button>          
           <h3>
@@ -23,7 +23,7 @@
       </md-toolbar>
       <md-toolbar class="md-hue-1" ng-show="showSearch">
         <div class="md-toolbar-tools">
-          <md-button class="md-icon-button"  aria-label="Menu" ng-click="toggleSidenav('left')">
+          <md-button class="md-icon-button"  aria-label="Menu" ng-click="searchAll()">
             <img class="logo" src="{{ url_for('static', filename='icon/logo_black.png') }}">
           </md-button>            
           <h3 flex="10">
@@ -31,7 +31,7 @@
           </h3>
           <md-input-container md-theme="input" flex>
             <label>&nbsp;</label>
-            <input id='search_input' ng-model="input" placeholder="enter search" autofocus>
+            <input id='search_input' ng-model="input" placeholder="enter search">
           </md-input-container>
           <md-button aria-label="Search" ng-click='search()'>
             <ng-md-icon icon="search"></ng-md-icon>
@@ -42,7 +42,7 @@
         </div>
       </md-toolbar>
 
-      <md-content class="md-padding" layout="row" layout-wrap  layout-align="center">
+      <md-content class="md-padding" layout="row" layout-wrap layout-align="center">
 
         <div class="stack-card" ng-repeat="item in projects">
               <md-card style="width: 265px; height: 420px">

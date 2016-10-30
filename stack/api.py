@@ -1,4 +1,4 @@
-from stack import app 
+from stack import app
 from flask import jsonify
 from elasticsearch import Elasticsearch
 from flask import request
@@ -35,7 +35,6 @@ def api_stack_post(id):
 	print (payload)
 
 	return id, 200
-
 
 @app.route('/stack/team/<id>', methods = ['GET'])
 def api_team(id):

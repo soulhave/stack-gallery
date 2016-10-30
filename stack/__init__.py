@@ -31,5 +31,8 @@ es_host = os.environ.get('ELASTICSEARCH_URL')
 if not es_host:
 	sys.exit('Error: You must define ELASTICSEARCH_URL environment variable')
 
-from stack import views
+from stack import view_stack
+from stack import view_auth
 from stack import api
+from stack import api_users
+from stack import api_technologies

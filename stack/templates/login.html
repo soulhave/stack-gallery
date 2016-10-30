@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<body layout="row" ng-controller="AuthController" >
+  <div layout="column" class="relative" layout-fill role="main" >
+    <md-toolbar ng-show="!showSearch">
+      <div class="md-toolbar-tools">
+        <md-button class="md-icon-button"  aria-label="Menu" >
+          <img class="logo" src="{{ url_for('static', filename='icon/logo_black.png') }}" >
+        </md-button>          
+        <h3>
+          Stack
+        </h3>
+        <span flex></span>
+      </div>
+    </md-toolbar>
+
+    <md-content layout="row" >
+      <div flex="70" hide show-gt-sm layout="column" layout-align="center start" >
+        <span class="md-display-2">Discover what other developers are using</span>
+        <ul>
+          <li class="md-headline">Share your development stack</li>
+          <li class="md-headline">Improve your technical skills by learning with other teams</li>          
+          <li class="md-headline">Powerful tool to build right team and priority technical training</li>
+        </ul>
+      </div>
+      <div layout="column" layout-align="top center">
+
+        <h1 class="md-title">Please Log In</h1>
+        <md-button class="md-primary" ng-href="/login">Google Account</md-button>      
+      </div>
+    </md-content>
+	</div>
+</body>
+
+{% endblock %}

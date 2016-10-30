@@ -1,6 +1,13 @@
-app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$resource', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $resource){
+app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$resource', '$timeout', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $resource, $timeout){
 
   $scope.input = ''
+
+  $scope.searchAll = function() {
+    $scope.input = ''
+    Stack.list(function(data){
+      $scope.projects = data;         
+    });    
+  }
 
   $scope.search = function() {
 
@@ -12,7 +19,28 @@ app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog',
     Stack.search({ q: q }, function(data){
       $scope.projects = data;
     });
-};
+  };
+
+  $scope.keyPress = function(event){
+    console.log(event.keyCode + ' - ' + event.altKey);
+    // if keyCode = ENTER (#13) 
+    if (event.altKey && event.keyCode == 70) {
+      $scope.showSearch = true
+      $timeout(function () { 
+              document.getElementById('search_input').focus();
+      }, 10);      
+    }
+
+    if ($scope.showSearch) { 
+      if (event.keyCode == 13) {
+        $scope.search()
+      }
+      // if keyCode = ESC (#27)
+      if (event.keyCode == 27) {
+        $scope.showSearch = false
+      }
+    }
+  };
 
   var Stack = $resource('api/stack/:action', 
       { q : '@q' }, 
@@ -54,11 +82,7 @@ app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog',
   $scope.like = function(item) {
     item.like_count += 1
     console.log('TODO: async call to update like action' + item.key)
-  }  
-
-  $scope.toggleSidenav = function(menuId) {
-    $mdSidenav(menuId).toggle();
-  };  
+  }
 
 }]);
 
