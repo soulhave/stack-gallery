@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<body layout="row" ng-controller="AuthController" >
+<body layout="row" >
   <div layout="column" class="relative" layout-fill role="main" >
     <md-toolbar ng-show="!showSearch">
       <div class="md-toolbar-tools">
@@ -16,21 +16,12 @@
       </div>
     </md-toolbar>
 
-    <md-content layout="row" >
-      <div flex="70" hide show-gt-sm layout="column" layout-align="center start" >
-
-        <span class="md-display-2">Discover what other developers are using</span>
-        <div class="label">Features:</div>
-        <ul>
-          <li class="md-headline">Share your development stack</li>
-          <li class="md-headline">Improve your technical skills by learning with other teams</li>          
-          <li class="md-headline">Powerful tool to build right team and priority technical training</li>
-        </ul>
-      </div>
-      <div layout="column" layout-align="top center">
-
+    <md-content>
+      <div flex layout-align="center"> 
+      <div layout="column" layout-align="center center" >
         <h1 class="md-title">Please Log In</h1>
-        <md-button class="md-primary" ng-href="/login">Google Account</md-button>      
+        <md-button class="md-primary md-raised md-hue-2" ng-href="/login">Google Account</md-button>      
+      </div>
       </div>
     </md-content>
 	</div>

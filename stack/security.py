@@ -11,7 +11,9 @@ def login_required(f):
         print ( '==> login_required: ' + str(access_token))
         if access_token is None:
           print ('==> not logged')
-          return redirect(url_for('signin', next=request.url))
+          # use for add feature redirect to next-url
+          #return redirect(url_for('signin', next=request.url))
+          return redirect(url_for('signin'))
         return f(*args, **kwargs)
     return decorated_function
 
@@ -47,6 +49,19 @@ def login_authorized(fn):
 
         return fn(userid=userid, *args, **kwargs)
     return _wrap    
+
+
+def revoke_token(access_token):
+    h = Http()
+    print ('revoking %s' % access_token)
+    resp, cont = h.request('https://accounts.google.com/o/oauth2/revoke?token=%s' % access_token,
+                           headers={'Host': 'www.googleapis.com',
+                                    'Authorization': access_token})
+
+    print cont
+
+    return resp
+
 
 # put this in for example gauth.py
 # ref: http://flask.pocoo.org/snippets/125/

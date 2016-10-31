@@ -1,5 +1,5 @@
 from stack import app 
-from security import login_required, login_authorized, validate_token
+from security import login_required, login_authorized, validate_token, revoke_token
 
 from flask import Flask, redirect, url_for, session
 from flask import render_template
@@ -42,7 +42,12 @@ def login():
 
 @app.route('/logout')
 def logout():
+    access_token = session.get('access_token')
+    print 'access_token %s' % access_token[0] 
     session.pop('access_token', None)
+
+    revoke_token(access_token[0])
+
     return redirect(url_for('index'))
 
 @app.route('/%s'% REDIRECT_URI)
