@@ -12,8 +12,10 @@ COPY server.py /app
 ADD stack /app/stack
 
 RUN pip install flask
+RUN pip install Flask-OAuth
 RUN pip install requests
 RUN pip install elasticsearch
+RUN pip install httplib2
 
 WORKDIR /app
 # not work
