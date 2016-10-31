@@ -1,6 +1,8 @@
 from flask import redirect, url_for, session
 from flask import request, abort
 from functools import wraps
+from httplib2 import Http
+import json
 
 def login_required(f):
     @wraps(f)
@@ -12,30 +14,6 @@ def login_required(f):
           return redirect(url_for('signin', next=request.url))
         return f(*args, **kwargs)
     return decorated_function
-
-# put this in for example gauth.py
-# ref: http://flask.pocoo.org/snippets/125/
-def validate_token(access_token):
-    '''Verifies that an access-token is valid and
-    meant for this app.
-
-    Returns None on fail, and an e-mail on success'''
-    h = Http()
-    resp, cont = h.request("https://www.googleapis.com/oauth2/v2/userinfo",
-                           headers={'Host': 'www.googleapis.com',
-                                    'Authorization': access_token})
-
-    if not resp['status'] == '200':
-        return None
-
-    try:
-        data = json.loads(cont)
-    except TypeError:
-        # Running this in Python3
-        # httplib2 returns byte objects
-        data = json.loads(cont.decode())
-
-    return data['email']
 
 def login_authorized(fn):
     """Decorator that checks that requests
@@ -69,3 +47,29 @@ def login_authorized(fn):
 
         return fn(userid=userid, *args, **kwargs)
     return _wrap    
+
+# put this in for example gauth.py
+# ref: http://flask.pocoo.org/snippets/125/
+def validate_token(access_token):
+    '''Verifies that an access-token is valid and
+    meant for this app.
+
+    Returns None on fail, and an e-mail on success'''
+    h = Http()
+    resp, cont = h.request("https://www.googleapis.com/oauth2/v2/userinfo",
+                           headers={'Host': 'www.googleapis.com',
+                                    'Authorization': access_token})
+
+    print cont
+
+    if not resp['status'] == '200':
+        return None
+
+    try:
+        data = json.loads(cont)
+    except TypeError:
+        # Running this in Python3
+        # httplib2 returns byte objects
+        data = json.loads(cont.decode())
+
+    return data['email']

@@ -1,5 +1,5 @@
 from stack import app 
-from security import login_required, login_authorized
+from security import login_required, login_authorized, validate_token
 
 from flask import Flask, redirect, url_for, session
 from flask import render_template
@@ -49,9 +49,18 @@ def logout():
 @google.authorized_handler
 def authorized(resp):
     access_token = resp['access_token']
-    print ('token %s' % access_token)
-    session['access_token'] = access_token, ''
-    return redirect(url_for('index'))
+    print ('token ===> %s' % access_token)
+
+    access_token = access_token
+    oauth_token = 'OAuth %s' % access_token    
+    userid = validate_token(oauth_token)
+    print ('userid ==> %s' % userid)
+
+    if not '@ciandt.com' in userid:
+      abort(403)
+    else:  
+      session['access_token'] = access_token, ''
+      return redirect(url_for('index'))
 
 @google.tokengetter
 def get_access_token():

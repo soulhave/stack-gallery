@@ -113,22 +113,23 @@ class Repository(object):
 			if 'stack' in item:
 				for tech in item['stack']:
 					tech_name = tech
-					tech_key = re.sub('[#/ ]', '_', re.sub('[^\x00-\x7F]', '_', re.sub('[.]', '', tech_name.lower())))
-					image = 'https://techgallery.ciandt.com/assets/images/placeholder.png'
-					
-					## workaround: techgallery image has no pattern for url name
-					tc_tech = self.tc.technology(tech_key)
-					if 'image' in tc_tech:
-						logger.debug(tc_tech['image'])
-						image = tc_tech['image']
+					if tech_name:
+						tech_key = re.sub('[#/ ]', '_', re.sub('[^\x00-\x7F]', '_', re.sub('[.]', '', tech_name.lower())))
+						image = 'https://techgallery.ciandt.com/assets/images/placeholder.png'
+						
+						## workaround: techgallery image has no pattern for url name
+						tc_tech = self.tc.technology(tech_key)
+						if 'image' in tc_tech:
+							logger.debug(tc_tech['image'])
+							image = tc_tech['image']
 
-					doc_tech = {
-						"technology" : tech_key,
-						"technologyName": tech_name,
-						"imageUrl" : image
-					}
-					# add new tech definition
-					stack.append(doc_tech)
+						doc_tech = {
+							"technology" : tech_key,
+							"technologyName": tech_name,
+							"imageUrl" : image
+						}
+						# add new tech definition
+						stack.append(doc_tech)
 			else: 
 				print 'ERROR =>  project with no stack'
 			return stack
