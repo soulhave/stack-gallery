@@ -2,10 +2,10 @@
 
 # Table of Contents
 1. [Authentication](#authentication)
-2. [Stacks API](#stacks-api)
-2.1 [List Stacks](#list-stacks)
-2.1 [List Stacks](#get-stacks)
-2.1 [List Stacks](#add-stacks)
+2. [Stacks API](#stacks-api) <br />
+2.1 [List Stacks](#list-stacks)<br />
+2.1 [List Stacks](#get-stacks)<br />
+2.1 [List Stacks](#add-stacks)<br />
 3. [Users API](#users-api)
 3. [Trends API](#trends-api)
 
@@ -21,7 +21,6 @@ curl -H "Authorization: OAUTH-TOKEN" http://stack.ciandt.com/api/version
 ### Stacks API
 
 #### List Stacks
-----
 This call lists all the [available stacks] ordered by last-update field
 
 * **URL:** /api/stacks
@@ -126,6 +125,8 @@ This call adds the new stack with
 	"key": "unique-id",	
 }
 
+----
 ### Users API
 
+----
 ### Trends API
