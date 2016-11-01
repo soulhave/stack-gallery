@@ -12,7 +12,7 @@ config = {'elasticsearch':es_host}
 
 @app.route('/api/version', methods = ['GET'])
 def api_version():
-	return __version__
+	return jsonify(__version__)
 
 @app.route('/api/stacks/', methods = ['GET'])
 def api_stack():
@@ -41,7 +41,7 @@ def api_stack_post(id):
 
 	return id, 200
 
-@app.route('/api/stack/team/<id>', methods = ['GET'])
+@app.route('/api/stacks/team/<id>', methods = ['GET'])
 def api_team(id):
 	source='team.*'
 	r = Database(config)

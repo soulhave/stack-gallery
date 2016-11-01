@@ -59,12 +59,12 @@ This call lists all the [available stacks] ordered by last-update field
  ```
 
 #### Search Stacks
-Get a specific stack by id
+Search stack by query param. Query is passed by 'q' URL param
 
 * **URL:** /api/stacks/search
 * **Method:** GET
-*  **URL Params**
-   **Required:**
+* **URL Params**
+**Required:** <br />
    `q=[string]`
 * **Response**
 **Code:** 200 <br />
@@ -98,6 +98,7 @@ Get a specific stack by id
 
 #### Team Stack
 Get a team for stack id. A team is a list of users with email, login, image-url and name
+
 * **URL:** /api/stacks/team/<id>
 * **Method:** GET
 * **Response**
@@ -112,8 +113,6 @@ Get a team for stack id. A team is a list of users with email, login, image-url 
 	},
 ]
 ```	
-
-
 
 #### Get Stacks
 Get a specific stack by id
@@ -149,7 +148,8 @@ Get a specific stack by id
 
 
 #### Add Stacks
-This call adds the new stack with 
+This call adds the new stack.
+
 * **URL:** /api/stacks
 * **Method:** POST
 * **Data Params:**
@@ -183,7 +183,7 @@ This call adds the new stack with
 {
 	"key": "unique-id",	
 }
-```
+``
 
 ----
 ### Users API

@@ -59,7 +59,7 @@ app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog',
   $scope.showTeam = function(ev, stack_id) {
 
     // GET team for stack id
-    url = 'api/stack/team/' + stack_id
+    url = 'api/stacks/team/' + stack_id
     var TeamApi = $resource(url);
     TeamApi.query(function(data){
       $mdDialog.show({
