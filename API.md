@@ -31,7 +31,7 @@ This call lists all the [available stacks] ordered by last-update field
 * **Response**
 **Code:** 200 <br />
 **Content:** 
- ```js
+```js
 [
 	{
 	"key": "unique-id",	
@@ -179,9 +179,11 @@ This call adds the new stack with
 * **Response**
 **Code:** 201 Created <br />
 **Content:** 
+```js
 {
 	"key": "unique-id",	
 }
+```
 
 ----
 ### Users API
