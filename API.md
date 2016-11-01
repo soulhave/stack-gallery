@@ -3,11 +3,11 @@
 # Table of Contents
 1. [Authentication](#authentication)
 2. [Stacks API](#stacks-api) 
- 2.1 [List Stacks](#list-stacks)
- 2.2 [List Stacks](#get-stacks)
- 2.3 [List Stacks](#add-stacks)
+ 1. [List Stacks](#list-stacks)
+ 2. [List Stacks](#get-stacks)
+ 3. [List Stacks](#add-stacks)
 3. [Users API](#users-api)
-3. [Trends API](#trends-api)
+4. [Trends API](#trends-api)
 
 ## Authentication
 There is only one way to authentication through Stack. Request a Google OAuth Token and send it in a header, like this:
