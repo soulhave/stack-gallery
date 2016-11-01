@@ -1,11 +1,20 @@
 from stack import app 
-from security import login_required
+from security import login_required, get_oauth_token
 
+from flask import session
 from flask import render_template
+
+@app.after_request
+def after_request(response):
+    oauth_token = get_oauth_token()
+    if oauth_token: 
+        response.headers['Authorization'] = oauth_token
+    return response
 
 @app.route('/')
 @login_required
 def index():
+    print 'index_request'
     return render_template('index.html')
 
 @app.route('/dialog-team')

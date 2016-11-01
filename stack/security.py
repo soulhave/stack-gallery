@@ -8,17 +8,17 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         access_token = session.get('access_token')
-        print ( '==> login_required access_token: ' + str(access_token))
         if access_token is None:
-          print ('==> not logged')
-          # use for add feature redirect to next-url - redirect(url_for('signin', next=request.url))
+          print ('==> not logged. Redirect to the signin page')
+          # use for How To: Redirect back to current page after sign in, sign out, sign up
+          # redirect(url_for('signin', next=request.url))
           return redirect(url_for('signin'))
         return f(*args, **kwargs)
     return decorated_function
 
 def login_authorized(fn):
     """Decorator that checks that requests
-    contain an id-token in the request header.
+    contain an id-token in the session or request header.
     userid will be None if the
     authentication failed, and have an id otherwise.
 
@@ -30,15 +30,13 @@ def login_authorized(fn):
     """
     @wraps(fn)
     def decorated_function(*args, **kwargs):
-        if 'Authorization' not in request.headers:
+        authorization = get_oauth_token()
+        if not authorization: 
             # Unauthorized
-            print("No token in header")
             abort(401)
             return None
 
-        print("Checking token...")
-        authorization = request.headers['Authorization']
-        print ('==> %s' % authorization )
+        print ('login_authorized token ==> %s' % authorization )
         user = validate_token(authorization)
         if user is None:
             print("Check returned FAIL!")
@@ -61,6 +59,17 @@ def revoke_token(access_token):
     return resp
 
 
+def get_oauth_token():
+    access_token = session.get('access_token')
+    if access_token:
+        oauth_token = 'OAuth %s' % access_token[0]
+        return oauth_token
+    else:
+        if 'Authorization' in request.headers:
+            return request.headers['Authorization']
+        else:
+            return None
+
 # put this in for example gauth.py
 # ref: http://flask.pocoo.org/snippets/125/
 def validate_token(access_token):
@@ -72,8 +81,6 @@ def validate_token(access_token):
     resp, cont = h.request("https://www.googleapis.com/oauth2/v2/userinfo",
                            headers={'Host': 'www.googleapis.com',
                                     'Authorization': access_token})
-
-    print cont
 
     if not resp['status'] == '200':
         return None

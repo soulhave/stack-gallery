@@ -1,5 +1,7 @@
 from stack import app
 from stack.version import __version__
+from stack.security import login_authorized
+
 from flask import jsonify
 from elasticsearch import Elasticsearch
 from flask import request
@@ -15,19 +17,22 @@ def api_version():
 	return jsonify(__version__)
 
 @app.route('/api/stacks/', methods = ['GET'])
-def api_stack():
+@login_authorized
+def api_stack(user):
 	r = Database(config)
 	
 	return jsonify(r.list_stack())
 
 @app.route('/api/stacks/search', methods = ['GET'])
-def api_stack_search():
+@login_authorized
+def api_stack_search(user):
 	r = Database(config)
 	q = request.args.get('q')
 
 	return jsonify(r.search_stack(q))
 
 @app.route('/api/stacks/<id>', methods = ['GET'])
+@login_authorized
 def api_stack_id(id):
 	r = Database(config)
 	source = request.args.get('_source')
@@ -35,6 +40,7 @@ def api_stack_id(id):
 	return jsonify(r.get_stack(id, source))
 
 @app.route('/api/stacks/<id>', methods = ['POST'])
+@login_authorized
 def api_stack_post(id):
 	payload = request.json
 	print (payload)
@@ -42,7 +48,8 @@ def api_stack_post(id):
 	return id, 200
 
 @app.route('/api/stacks/team/<id>', methods = ['GET'])
-def api_team(id):
+@login_authorized
+def api_team(user, id):
 	source='team.*'
 	r = Database(config)
 	stack = r.get_stack(id, source)

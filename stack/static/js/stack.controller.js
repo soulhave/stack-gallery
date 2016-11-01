@@ -1,4 +1,4 @@
-app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog', '$resource', '$timeout', function($scope, $mdBottomSheet, $mdSidenav, $mdDialog, $resource, $timeout){
+app.controller('StackController', ['$scope', '$mdDialog', '$resource', '$timeout', function($scope, $mdDialog, $resource, $timeout){
 
   $scope.input = ''
 
@@ -13,7 +13,7 @@ app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog',
 
   $scope.searchAll = function() {
     $scope.input = ''
-    Stack.list(function(data){
+    StackAPI.list(function(data){
       $scope.projects = data;         
     });    
   }

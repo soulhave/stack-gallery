@@ -43,27 +43,23 @@ def login():
 @app.route('/logout')
 def logout():
     access_token = session.get('access_token')
-    print 'access_token %s' % access_token[0] 
-    session.pop('access_token', None)
-
-    revoke_token(access_token[0])
+    if access_token:      
+      session.pop('access_token', None)
+      revoke_token(access_token[0])
 
     return redirect(url_for('index'))
 
 @app.route('/%s'% REDIRECT_URI)
 @google.authorized_handler
 def authorized(resp):
-    # print resp['token_type'] = Bearer
     access_token = resp['access_token']
 
-    oauth_token = 'OAuth %s' % access_token    
-    print ('ACCESS_TOKEN ===> %s' % oauth_token)
-    
-    user = validate_token(oauth_token)
-    print ('USER LOGGED: %s' % user['email'])
+    user = validate_token('OAuth %s' % access_token    )
     if not '@ciandt.com' in user['email']:
+      print ('Unauthorized access: ') 
       abort(403)
     else:  
+      print ('USER LOGGED: %s' % user['email'])
       session['access_token'] = access_token, ''
       return redirect(url_for('index'))
 

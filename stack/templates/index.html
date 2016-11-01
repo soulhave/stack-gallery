@@ -3,12 +3,12 @@
 {% block body %}
 
   <!-- Container #1 (see wireframe) -->
-  <body layout="row" ng-controller="AppCtrl" ng-keyup="keyPress($event)">
+  <body layout="row" ng-controller="StackController" ng-keyup="keyPress($event)">
 
     <div layout="column" class="relative" layout-fill role="main" >
       <md-toolbar ng-show="!showSearch">
         <div class="md-toolbar-tools">
-          <md-button class="md-icon-button"  aria-label="Menu" ng-click="searchAll()">
+          <md-button class="md-icon-button"  aria-label="Menu" ng-href="/">
             <img class="logo" src="{{ url_for('static', filename='icon/logo_black.png') }}" >
           </md-button>          
           <h3>
@@ -18,12 +18,12 @@
           <md-button aria-label="Search" ng-click="showSearch = !showSearch">
             <ng-md-icon icon="search"></ng-md-icon>
           </md-button>
-          <md-button class="md-raised md-hue-2" ng-href="/logout">Logout</md-button>       
+          <md-button ng-controller="AuthController" class="md-raised md-hue-2" ng-click="logout()">Logout</md-button>
         </div>
       </md-toolbar>
       <md-toolbar class="md-hue-1" ng-show="showSearch">
         <div class="md-toolbar-tools">
-          <md-button class="md-icon-button"  aria-label="Menu" ng-click="searchAll()">
+          <md-button class="md-icon-button"  aria-label="Menu" ng-href="/">
             <img class="logo" src="{{ url_for('static', filename='icon/logo_black.png') }}">
           </md-button>            
           <h3 flex="10">
@@ -77,7 +77,7 @@
                   </md-card-content>  
                   <!-- stack actions-->
                   </md-card-actions>
-                    <md-card-actions layout="row" style="padding-top:10px">
+                    <md-card-actions layout="row">
                       <!--
                       <md-button  style="overflow: inherit;" class="md-icon-button badge1" data-badge="[[item.like_count]]" aria-label="Favorite" ng-click="like(item)">
                         <md-icon ng-class="item.like_count > 0 ? 'selected' : 'normal'" aria-label="Favorite">favorite</md-icon>
