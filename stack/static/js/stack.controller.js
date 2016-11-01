@@ -2,6 +2,15 @@ app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog',
 
   $scope.input = ''
 
+
+  var StackAPI = $resource('api/stacks/:action', 
+      { q : '@q' }, 
+      {
+        list : { method : 'GET', isArray: true },
+        search : { method : 'GET', params : {action : 'search'}, isArray: true }
+      }
+  );  
+
   $scope.searchAll = function() {
     $scope.input = ''
     Stack.list(function(data){
@@ -42,14 +51,6 @@ app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog',
     }
   };
 
-  var StackAPI = $resource('api/stacks/:action', 
-      { q : '@q' }, 
-      {
-        list : { method : 'GET', isArray: true },
-        search : { method : 'GET', params : {action : 'search'}, isArray: true }
-      }
-  );
-
   //var StackApi = $resource('stack');
   StackAPI.list(function(data){
     $scope.projects = data;         
@@ -58,7 +59,7 @@ app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog',
   $scope.showTeam = function(ev, stack_id) {
 
     // GET team for stack id
-    url = 'stack/team/' + stack_id
+    url = 'api/stack/team/' + stack_id
     var TeamApi = $resource(url);
     TeamApi.query(function(data){
       $mdDialog.show({

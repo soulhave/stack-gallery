@@ -5,8 +5,9 @@
 2. [Stacks API](#stacks-api) 
  1. [List Stacks](#list-stacks)
  2. [Search Stacks](#search-stacks)
- 3. [Get Stacks](#get-stacks) 
- 4. [Add Stacks](#add-stacks)
+ 3. [Get Stack's Team](#team-stacks) 
+ 4. [Get Stacks](#get-stacks) 
+ 5. [Add Stacks](#add-stacks)
 3. [Users API](#users-api)
 4. [Trends API](#trends-api)
 
@@ -94,6 +95,25 @@ Get a specific stack by id
 	...	
 ]
  ```
+
+#### Team Stack
+Get a team for stack id. A team is a list of users with email, login, image-url and name
+* **URL:** /api/stacks/team/<id>
+* **Method:** GET
+* **Response**
+**Code:** 200 <br />
+**Content:** 
+```js
+[
+	{
+	"email": "williamb@ciandt.com",
+	"image": "https://cdn.github.com/people/photo/williamb",
+	"login": "williamb"
+	},
+]
+```	
+
+
 
 #### Get Stacks
 Get a specific stack by id
