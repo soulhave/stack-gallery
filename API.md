@@ -4,8 +4,9 @@
 1. [Authentication](#authentication)
 2. [Stacks API](#stacks-api) 
  1. [List Stacks](#list-stacks)
- 2. [List Stacks](#get-stacks)
- 3. [List Stacks](#add-stacks)
+ 2. [Search Stacks](#search-stacks)
+ 3. [Get Stacks](#get-stacks) 
+ 4. [Add Stacks](#add-stacks)
 3. [Users API](#users-api)
 4. [Trends API](#trends-api)
 
@@ -29,7 +30,44 @@ This call lists all the [available stacks] ordered by last-update field
 * **Response**
 **Code:** 200 <br />
 **Content:** 
- 
+ ```js
+[
+	{
+	"key": "unique-id",	
+	"name": "name",
+	"owner": "owner",
+	"stack": [
+		{
+		"imageUrl": "https://www.googleapis.com/download/storage/v1/b/tech-gallery-prod/o/java?generation=1453060953626000&alt=media",
+		"technology": "java",
+		"technologyName": "Java"
+		}...
+	}],
+	"team" : [
+		{
+		"email": "williamb@ciandt.com",
+		"image": "https://cdn.github.com/people/photo/williamb",
+		"login": "williamb"
+		}...
+	]
+	"like_count": 0,
+	"index": 0.8700000000000002
+	}
+	...	
+]
+ ```
+
+#### Search Stacks
+Get a specific stack by id
+
+* **URL:** /api/stacks/search
+* **Method:** GET
+*  **URL Params**
+   **Required:**
+   `q=[string]`
+* **Response**
+**Code:** 200 <br />
+**Content:** 
 ```js
 [
 	{

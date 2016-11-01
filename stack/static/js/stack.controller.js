@@ -16,7 +16,7 @@ app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog',
       q = "*"
     }
 
-    Stack.search({ q: q }, function(data){
+    StackAPI.search({ q: q }, function(data){
       $scope.projects = data;
     });
   };
@@ -42,7 +42,7 @@ app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog',
     }
   };
 
-  var Stack = $resource('api/stack/:action', 
+  var StackAPI = $resource('api/stacks/:action', 
       { q : '@q' }, 
       {
         list : { method : 'GET', isArray: true },
@@ -51,7 +51,7 @@ app.controller('AppCtrl', ['$scope', '$mdBottomSheet','$mdSidenav', '$mdDialog',
   );
 
   //var StackApi = $resource('stack');
-  Stack.list(function(data){
+  StackAPI.list(function(data){
     $scope.projects = data;         
   });
 

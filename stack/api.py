@@ -14,34 +14,34 @@ config = {'elasticsearch':es_host}
 def api_version():
 	return __version__
 
-@app.route('/api/stack/', methods = ['GET'])
+@app.route('/api/stacks/', methods = ['GET'])
 def api_stack():
 	r = Database(config)
 	
 	return jsonify(r.list_stack())
 
-@app.route('/api/stack/search', methods = ['GET'])
+@app.route('/api/stacks/search', methods = ['GET'])
 def api_stack_search():
 	r = Database(config)
 	q = request.args.get('q')
 
 	return jsonify(r.search_stack(q))
 
-@app.route('/stack/<id>', methods = ['GET'])
+@app.route('/api/stacks/<id>', methods = ['GET'])
 def api_stack_id(id):
 	r = Database(config)
 	source = request.args.get('_source')
 
 	return jsonify(r.get_stack(id, source))
 
-@app.route('/stack/<id>', methods = ['POST'])
+@app.route('/api/stacks/<id>', methods = ['POST'])
 def api_stack_post(id):
 	payload = request.json
 	print (payload)
 
 	return id, 200
 
-@app.route('/stack/team/<id>', methods = ['GET'])
+@app.route('/api/stack/team/<id>', methods = ['GET'])
 def api_team(id):
 	source='team.*'
 	r = Database(config)
