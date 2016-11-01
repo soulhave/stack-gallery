@@ -2,10 +2,10 @@
 
 # Table of Contents
 1. [Authentication](#authentication)
-2. [Stacks API](#stacks-api) <br />
-2.1 [List Stacks](#list-stacks)<br />
-2.1 [List Stacks](#get-stacks)<br />
-2.1 [List Stacks](#add-stacks)<br />
+2. [Stacks API](#stacks-api) 
+ 2.1 [List Stacks](#list-stacks)
+ 2.2 [List Stacks](#get-stacks)
+ 2.3 [List Stacks](#add-stacks)
 3. [Users API](#users-api)
 3. [Trends API](#trends-api)
 
