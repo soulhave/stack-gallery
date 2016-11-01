@@ -183,7 +183,7 @@ This call adds the new stack.
 {
 	"key": "unique-id",	
 }
-``
+```
 
 ----
 ### Users API

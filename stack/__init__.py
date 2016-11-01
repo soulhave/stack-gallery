@@ -33,6 +33,6 @@ if not es_host:
 
 from stack import view_stack
 from stack import view_auth
-from stack import api
+from stack import api_stacks
 from stack import api_users
 from stack import api_technologies
