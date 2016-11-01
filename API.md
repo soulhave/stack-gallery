@@ -1,5 +1,11 @@
 # Stack API documentation
 
+# Table of Contents
+1. [Authentication](#authentication)
+2. [Stacks API](#stacks-api)
+3. [Users API](#users-api)
+3. [Trends API](#trends-api)
+
 ## Authentication
 There is only one way to authentication through Stack. Request a Google OAuth Token and send it in a header, like this:
 
@@ -28,8 +34,8 @@ This call lists all the [available stacks] ordered by last-update field
 	"index": 0.8700000000000002,
 	"key": "1LDOG-vha5Tei2ME4WWd1pmyMpt2japmt-qKBNRiRNMM",
 	"like_count": 0,
-	"name": "BR/CPS - WebSites Imkt",
-	"owner": "Coca-Cola",
+	"name": "Playlist",
+	"owner": "Spotify",
 	"stack": [
 		{
 		"imageUrl": "https://www.googleapis.com/download/storage/v1/b/tech-gallery-prod/o/java?generation=1453060953626000&alt=media",
