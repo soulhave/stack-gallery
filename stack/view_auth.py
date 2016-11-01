@@ -53,15 +53,15 @@ def logout():
 @app.route('/%s'% REDIRECT_URI)
 @google.authorized_handler
 def authorized(resp):
+    # print resp['token_type'] = Bearer
     access_token = resp['access_token']
-    print ('token ===> %s' % access_token)
 
-    access_token = access_token
     oauth_token = 'OAuth %s' % access_token    
-    userid = validate_token(oauth_token)
-    print ('userid ==> %s' % userid)
-
-    if not '@ciandt.com' in userid:
+    print ('ACCESS_TOKEN ===> %s' % oauth_token)
+    
+    user = validate_token(oauth_token)
+    print ('USER LOGGED: %s' % user['email'])
+    if not '@ciandt.com' in user['email']:
       abort(403)
     else:  
       session['access_token'] = access_token, ''

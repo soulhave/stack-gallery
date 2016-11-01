@@ -12,9 +12,8 @@ def get_technology(id, oauth_token):
   return response.text
 
 @app.route('/technology/<id>')
-@login_authorized
-def list_technology(userid, id):
-  print ('user - %s' % userid)
+def list_technology(user, id):
+  print ('user - %s' % user)
   #print (request.headers)
   url = 'https://tech-gallery.appspot.com/_ah/api/rest/v1/technology/%s' % id
   response = requests.get(url=url)
@@ -22,7 +21,8 @@ def list_technology(userid, id):
   return response.text
 
 @app.route('/technologies')
-def technologies():
+@login_authorized
+def technologies(userid):
   access_token = session.get('access_token')  
   url = 'https://tech-gallery.appspot.com/_ah/api/rest/v1/technology'
 

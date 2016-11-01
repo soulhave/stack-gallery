@@ -8,11 +8,10 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         access_token = session.get('access_token')
-        print ( '==> login_required: ' + str(access_token))
+        print ( '==> login_required access_token: ' + str(access_token))
         if access_token is None:
           print ('==> not logged')
-          # use for add feature redirect to next-url
-          #return redirect(url_for('signin', next=request.url))
+          # use for add feature redirect to next-url - redirect(url_for('signin', next=request.url))
           return redirect(url_for('signin'))
         return f(*args, **kwargs)
     return decorated_function
@@ -25,12 +24,12 @@ def login_authorized(fn):
 
     Usage:
     @app.route("/")
-    @authorized
-    def secured_root(userid=None):
+    @auth.login_authorized
+    def secured_call(userid=None):
         pass
     """
-
-    def _wrap(*args, **kwargs):
+    @wraps(fn)
+    def decorated_function(*args, **kwargs):
         if 'Authorization' not in request.headers:
             # Unauthorized
             print("No token in header")
@@ -40,15 +39,14 @@ def login_authorized(fn):
         print("Checking token...")
         authorization = request.headers['Authorization']
         print ('==> %s' % authorization )
-        userid = validate_token(authorization)
-        if userid is None:
+        user = validate_token(authorization)
+        if user is None:
             print("Check returned FAIL!")
             # Unauthorized
             abort(401)
             return None
-
-        return fn(userid=userid, *args, **kwargs)
-    return _wrap    
+        return fn(user=user, *args, **kwargs)
+    return decorated_function    
 
 
 def revoke_token(access_token):
@@ -69,7 +67,7 @@ def validate_token(access_token):
     '''Verifies that an access-token is valid and
     meant for this app.
 
-    Returns None on fail, and an e-mail on success'''
+    Returns None on fail, and an User on success'''
     h = Http()
     resp, cont = h.request("https://www.googleapis.com/oauth2/v2/userinfo",
                            headers={'Host': 'www.googleapis.com',
@@ -87,4 +85,6 @@ def validate_token(access_token):
         # httplib2 returns byte objects
         data = json.loads(cont.decode())
 
-    return data['email']
+    data['oauth_token'] = access_token
+
+    return data
