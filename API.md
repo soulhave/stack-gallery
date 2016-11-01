@@ -10,7 +10,7 @@
 There is only one way to authentication through Stack. Request a Google OAuth Token and send it in a header, like this:
 
 ```console
-curl -H "Authorization: OAUTH-TOKEN" http://stack.ciandt.com/version
+curl -H "Authorization: OAUTH-TOKEN" http://stack.ciandt.com/api/version
 ```
 
 ## API Resources
@@ -21,35 +21,107 @@ curl -H "Authorization: OAUTH-TOKEN" http://stack.ciandt.com/version
 ----
 This call lists all the [available stacks] ordered by last-update field
 
-* **URL**
-* **Method: GET**
+* **URL:** /api/stacks
+* **Method:** GET
 * **URL Params***
-* **Success Response**
-* **Code:** 200 <br />
-* **Content:** 
+* **Response**
+**Code:** 200 <br />
+**Content:** 
  
 ```js
 [
 	{
-	"index": 0.8700000000000002,
-	"key": "1LDOG-vha5Tei2ME4WWd1pmyMpt2japmt-qKBNRiRNMM",
-	"like_count": 0,
-	"name": "Playlist",
-	"owner": "Spotify",
+	"key": "unique-id",	
+	"name": "name",
+	"owner": "owner",
 	"stack": [
 		{
 		"imageUrl": "https://www.googleapis.com/download/storage/v1/b/tech-gallery-prod/o/java?generation=1453060953626000&alt=media",
 		"technology": "java",
 		"technologyName": "Java"
-		},
+		}...
+	}],
+	"team" : [
 		{
-		"imageUrl": "https://www.googleapis.com/download/storage/v1/b/tech-gallery-prod/o/javascript?generation=1453211966798000&alt=media",
-		"technology": "javascript",
-		"technologyName": "Javascript"
-		}
+		"email": "williamb@ciandt.com",
+		"image": "https://cdn.github.com/people/photo/williamb",
+		"login": "williamb"
+		}...
+	]
+	"like_count": 0,
+	"index": 0.8700000000000002
 	}
+	...	
 ]
  ```
+
+**Get Stacks** 
+Get a specific stack by id
+
+* **URL:** /api/stacks/:id
+* **Method:** GET
+* **Response**
+**Code:** 200 <br />
+**Content:** 
+```js
+{
+	"key": "unique-id",	
+	"name": "name",
+	"owner": "owner",
+	"stack": [
+		{
+		"imageUrl": "https://www.googleapis.com/download/storage/v1/b/tech-gallery-prod/o/java?alt=media",
+		"technology": "java",
+		"technologyName": "Java"
+		}...
+	}],
+	"team" : [
+		{
+		"email": "williamb@ciandt.com",
+		"image": "https://cdn.github.com/people/photo/williamb",
+		"login": "williamb"
+		}...
+	]
+	"like_count": 0,
+	"index": 0.8700000000000002
+}
+```
+
+
+**Add Stacks** 
+This call adds the new stack with 
+* **URL:** /api/stacks
+* **Method:** POST
+* **Data Params:**
+```js
+{
+	"key": "unique-id",	
+	"name": "name",
+	"owner": "owner",
+	"stack": [
+		{
+		"imageUrl": "https://www.googleapis.com/download/storage/v1/b/tech-gallery-prod/o/java?alt=media",
+		"technology": "java",
+		"technologyName": "Java"
+		}...
+	}],
+	"team" : [
+		{
+		"email": "williamb@ciandt.com",
+		"image": "https://cdn.github.com/people/photo/williamb",
+		"login": "williamb"
+		}...
+	]
+	"like_count": 0,
+	"index": 0.8700000000000002
+}
+```
+* **Response**
+**Code:** 201 Created <br />
+**Content:** 
+{
+	"key": "unique-id",	
+}
 
 ### Users API
 

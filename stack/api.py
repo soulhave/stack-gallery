@@ -1,4 +1,5 @@
 from stack import app
+from stack.version import __version__
 from flask import jsonify
 from elasticsearch import Elasticsearch
 from flask import request
@@ -8,6 +9,10 @@ import logging
 logger = logging.getLogger('stack')
 
 config = {'elasticsearch':es_host}
+
+@app.route('/api/version', methods = ['GET'])
+def api_version():
+	return __version__
 
 @app.route('/api/stack/', methods = ['GET'])
 def api_stack():
