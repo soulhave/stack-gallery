@@ -29,7 +29,6 @@ Running server local
 $ python server.py
 ```
 
-
 ## Running (by docker)
 
 Build the image using the following command

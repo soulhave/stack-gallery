@@ -9,13 +9,13 @@
         },  
         {
             "NAME":"elasticsearch",
-            "LEVEL": "DEBUG",
-            "LEVELNO":"10"
+            "LEVEL": "INFO",
+            "LEVELNO":"20"
         },
         {
             "NAME":"elasticsearch.trace", 
-            "LEVEL": "DEBUG",
-            "LEVELNO":"10"
+            "LEVEL": "INFO",
+            "LEVELNO":"20"
         }
     ]
 }

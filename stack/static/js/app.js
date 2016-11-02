@@ -21,20 +21,20 @@ app.run(function ($http) {
 app.factory('BearerAuthInterceptor', function ($rootScope, $q, $window) {
     return {
         request: function(config) {
-        	console.log('request => method: ' + config.method + ' url: ' + config.url);
+            // console.log('request => method: ' + config.method + ' url: ' + config.url);
 
             config.headers = config.headers || {};
             token = window.localStorage.oauthToken
             if (token !== null && token !== 'null') {
-            	console.log('add header Authorization ' + token);
+            	// console.log('add header Authorization ' + token);
             	config.headers.Authorization = token
         	}
 
             return config || $q.when(config);
         },
         response: function(response) {
-        	console.log('response => status: ' + response.status + ' url: ' + response.config.url);
-        	console.log(response.headers('Authorization'));
+        	// console.log('response => status: ' + response.status + ' url: ' + response.config.url);
+        	// console.log(response.headers('Authorization'));
 
         	window.localStorage.setItem('oauthToken', response.headers('Authorization'))
             if (response.status === 401) {

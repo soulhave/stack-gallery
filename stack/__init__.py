@@ -14,6 +14,15 @@ app.jinja_env.globals['static'] = (
     lambda filename: url_for('static', filename = filename)
 )
 
+################
+#### config ####
+################
+app.config.from_json('%s.json' % mode)
+
+app.config['GOOGLE_CLIENT_SECRET'] = get_environ(app.config, 'GOOGLE_CLIENT_SECRET')
+app.config['GOOGLE_CLIENT_ID'] = get_environ(app.config, 'GOOGLE_CLIENT_ID')
+app.config['ELASTICSEARCH_URL'] = get_environ(app.config, 'ELASTICSEARCH_URL')
+
 ########################
 #### logging config ####
 ########################
@@ -30,16 +39,6 @@ logger = logging.getLogger('stack')
 logger.info('starting app => %s ' % id(app))
 logger.info('starting mode => %s ' % mode)
 
-################
-#### config ####
-################
-app.config.from_json('%s.json' % mode)
-logger.info('=== LOADING SECURED INFORMATION  ====')
-app.config['GOOGLE_CLIENT_SECRET'] = get_environ(app.config, 'GOOGLE_CLIENT_SECRET')
-app.config['GOOGLE_CLIENT_ID'] = get_environ(app.config, 'GOOGLE_CLIENT_ID')
-logger.info('google provider client  => LOADED' )
-app.config['ELASTICSEARCH_URL'] = get_environ(app.config, 'ELASTICSEARCH_URL')
-logger.info('elasticsearch host => LOADED' )
 
 ##############
 #### view ####
@@ -53,3 +52,4 @@ from stack import view_auth
 from stack import api_stacks
 from stack import api_users
 from stack import api_technologies
+from stack import api_trends

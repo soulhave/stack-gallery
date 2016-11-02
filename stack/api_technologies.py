@@ -2,8 +2,6 @@ from stack import app
 from stack.security import login_authorized
 
 import requests
-import json
-from flask import request, session
 from flask import jsonify
 
 @app.route('/api/technologies/<id>')

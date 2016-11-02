@@ -8,6 +8,9 @@
     <div layout="column" class="relative" layout-fill role="main" >
       <md-toolbar ng-show="!showSearch">
         <div class="md-toolbar-tools">
+          <md-button aria-label="Menu" ng-controller="LeftController" ng-click="toggleLeft()">
+            <ng-md-icon icon="menu"></ng-md-icon>
+          </md-button>
           <md-button class="md-icon-button"  aria-label="Menu" ng-href="/">
             <img class="logo" src="{{ url_for('static', filename='icon/logo_black.png') }}" >
           </md-button>          
@@ -33,7 +36,7 @@
             <label>&nbsp;</label>
             <input id='search_input' ng-model="input" placeholder="enter search">
           </md-input-container>
-          <md-button aria-label="Search" ng-click='search()'>
+          <md-button aria-label="Search"  ng-click='search()'>
             <ng-md-icon icon="search"></ng-md-icon>
           </md-button>
           <md-button ng-click="showSearch = !showSearch" aria-label="Back">
@@ -42,55 +45,99 @@
         </div>
       </md-toolbar>
 
-      <md-content class="md-padding" layout="row" layout-wrap layout-align="center">
 
-        <div class="stack-card" ng-repeat="item in projects">
-              <md-card style="width: 265px; height: 420px">
-                  <!-- stack title -->
+      <section layout="row" >
 
-                  <div layout="row" style="padding-top: 5px" />
-                      <div flex layout="column" />
-                        <md-button target="_blank" ng-href="https://docs.google.com/spreadsheets/d/[[item.key]]">[[item.name]]</md-button>
-                        <div layout="row" layout-align="center end" >
-                          <span style="font-size: 14px">[[item.owner]]</span>
-                        </div>                        
-                      </div>
-                      <!--
-                      <div flex="25" style="padding-top: 10px">
-                        <md-progress-circular md-mode="determinate" value="[[item.tkci * 100]]" md-diameter="50"></md-progress-circular>
-                        <span class="tkci">[[convert_tkci(item.tkci)]]</span>
-                      </div>
-                      -->
-                  </div> 
-                  
-                  <md-divider></md-divider>
+        <md-sidenav
+          class="md-sidenav-left"
+          md-component-id="left"
+          md-is-locked-open="$mdMedia('gt-md')"
+          md-whiteframe="4">
 
-                  <!-- stack images: list of technlogies--> 
-                  <md-card-content layout="row" layout-align="space-between">
-                    <div style="height: 269px; overflow:hidden;">          
-                      <span ng-repeat="tech in item.stack">
-                        <a class="stack-service-logo" href="https://techgallery.ciandt.com/#/technologies/[[tech.technology]]" target="_blank" data-hing="[[tech.technology]">
-                          <img alt="[[tech.technologyName]]" title="[[tech.technologyName]]" src="[[tech.imageUrl]]">
-                        </a>
-                      </span>  
-                    </div>     
-                  </md-card-content>  
-                  <!-- stack actions-->
-                  </md-card-actions>
-                    <md-card-actions layout="row">
-                      <!--
-                      <md-button  style="overflow: inherit;" class="md-icon-button badge1" data-badge="[[item.like_count]]" aria-label="Favorite" ng-click="like(item)">
-                        <md-icon ng-class="item.like_count > 0 ? 'selected' : 'normal'" aria-label="Favorite">favorite</md-icon>
-                      </md-button>
-                      -->
-                      <md-button class="md-icon-button" aria-label="People" ng-click="showTeam($event, item.key)">
-                        <md-icon>people</md-icon>
-                      </md-button>                   
+          <md-toolbar class="md-theme-indigo">
+            <h1 class="md-toolbar-tools">Filters Options</h1>
+          </md-toolbar>
+          <md-content layout-padding ng-controller="LeftController" >
+            <md-button ng-click="close()" class="md-primary" hide-gt-md>
+              Close Filter Options
+            </md-button>
+            <p hide show-gt-md>
+              Use filters options to search what you want.
+            </p>
+            <div layout="column">
+              <span class=".md-subhead">Owners:</span>
+              <md-divider style="padding-top:10px"></md-divider>
+              <span ng-repeat="item in owners">
+                <md-checkbox ng-model="checkbox" aria-label="[[item.name]]" class="md-primary">
+                  [[item.name]] ([[item.count]])
+                </md-checkbox>
+              </span>
+              <br />
+              <span class=".md-subhead">Technologies:</span>
+              <md-divider style="padding-top:10px"></md-divider>              
+              <span ng-repeat="item in techs">
+                <md-checkbox ng-model="checkbox" aria-label="[[item.name]]" class="md-primary">
+                  [[item.name]] ([[item.count]])
+                </md-checkbox>
+              </span>
+            </div>
+          </md-content>
+
+        </md-sidenav>
+
+<!--
+        <md-content layout="row" class="md-padding" layout-wrap layout-align="center">
+-->
+        <md-content flex="80" layout="row" layout-wrap>
+
+          <div class="stack-card" ng-repeat="item in projects">
+                <md-card style="width: 265px; height: 420px">
+                    <!-- stack title -->
+
+                    <div layout="row" style="padding-top: 5px" />
+                        <div flex layout="column" />
+                          <md-button target="_blank" ng-href="https://docs.google.com/spreadsheets/d/[[item.key]]">[[item.name]]</md-button>
+                          <div layout="row" layout-align="center end" >
+                            <span style="font-size: 14px">[[item.owner]]</span>
+                          </div>                        
+                        </div>
+                        <!--
+                        <div flex="25" style="padding-top: 10px">
+                          <md-progress-circular md-mode="determinate" value="[[item.tkci * 100]]" md-diameter="50"></md-progress-circular>
+                          <span class="tkci">[[convert_tkci(item.tkci)]]</span>
+                        </div>
+                        -->
+                    </div> 
+                    
+                    <md-divider></md-divider>
+
+                    <!-- stack images: list of technlogies--> 
+                    <md-card-content layout="row" layout-align="space-between">
+                      <div style="height: 269px; overflow:hidden;">          
+                        <span ng-repeat="tech in item.stack">
+                          <a class="stack-service-logo" href="https://techgallery.ciandt.com/#/technologies/[[tech.technology]]" target="_blank" data-hing="[[tech.technology]">
+                            <img alt="[[tech.technologyName]]" title="[[tech.technologyName]]" src="[[tech.imageUrl]]">
+                          </a>
+                        </span>  
+                      </div>     
+                    </md-card-content>  
+                    <!-- stack actions-->
                     </md-card-actions>
-                </md-card>
-        </div>
+                      <md-card-actions layout="row">
+                        <!--
+                        <md-button  style="overflow: inherit;" class="md-icon-button badge1" data-badge="[[item.like_count]]" aria-label="Favorite" ng-click="like(item)">
+                          <md-icon ng-class="item.like_count > 0 ? 'selected' : 'normal'" aria-label="Favorite">favorite</md-icon>
+                        </md-button>
+                        -->
+                        <md-button class="md-icon-button" aria-label="People" ng-click="showTeam($event, item.key)">
+                          <md-icon>people</md-icon>
+                        </md-button>                   
+                      </md-card-actions>
+                  </md-card>
+          </div>
 
-      </md-content>
+        </md-content>
+      </section>
     </div>    
   </body>
 {% endblock %}

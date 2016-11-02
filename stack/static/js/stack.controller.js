@@ -2,7 +2,6 @@ app.controller('StackController', ['$scope', '$mdDialog', '$resource', '$timeout
 
   $scope.input = ''
 
-
   var StackAPI = $resource('api/stacks/:action', 
       { q : '@q' }, 
       {
@@ -11,15 +10,7 @@ app.controller('StackController', ['$scope', '$mdDialog', '$resource', '$timeout
       }
   );  
 
-  $scope.searchAll = function() {
-    $scope.input = ''
-    StackAPI.list(function(data){
-      $scope.projects = data;         
-    });    
-  }
-
   $scope.search = function() {
-
     q = $scope.input
     if (q == '' || q == null) {
       q = "*"
@@ -57,7 +48,6 @@ app.controller('StackController', ['$scope', '$mdDialog', '$resource', '$timeout
   });
 
   $scope.showTeam = function(ev, stack_id) {
-
     // GET team for stack id
     url = 'api/stacks/team/' + stack_id
     var TeamApi = $resource(url);
