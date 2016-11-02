@@ -22,7 +22,9 @@ if option.lower() == 'full':
 	projects = r.list_projects()
 else:
 	projects = [item for item in r.list_projects() if not r.exists('stack', 'setting', item['key'])]
-logger.debug('%s projects ' % len(projects))
+logger.info('%s projects ' % len(projects))
+
+r.createTemplateIfNotExits('stack')
 
 for project in projects:
 	key = project['key']

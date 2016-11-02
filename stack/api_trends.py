@@ -34,7 +34,7 @@ class Database(object):
         "aggs": {
             "owners": {
               "terms": {
-                "field": "owner",
+                "field": "owner.raw",
                 "size": size,
                 "order": {
                   "_count": "desc"
@@ -52,7 +52,7 @@ class Database(object):
         "aggs": {
             "owners": {
               "terms": {
-                "field": "stack.technologyName",
+                "field": "stack.technologyName.raw",
                 "size": size,
                 "order": {
                   "_count": "desc"

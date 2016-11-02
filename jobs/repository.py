@@ -1,7 +1,9 @@
+import os
 import logging
 import re
 from elasticsearch import Elasticsearch
 from techgallery import TechGallery
+import json
 
 logger = logging.getLogger('stack')
 logger.addHandler(logging.NullHandler())
@@ -14,6 +16,21 @@ class Repository(object):
 	def __init__(self, config):
 		self.es = Elasticsearch([config['elasticsearch']])	
 		self.tc = TechGallery({'endpoint':'https://tech-gallery.appspot.com/_ah/api/rest/v1'})
+
+	def createTemplateIfNotExits(self, index):
+		"""if template doesn't exists, create one from json file definition 
+		Method reads a template definition from file on path ./resources ('%s-template.json' % index)
+		where index is a method's parameter
+		"""
+		if not self.es.indices.exists_template(name=index):
+			resource_path = os.path.join(os.path.split(__file__)[0], ("resources/%s-template.json" % index ))
+			with open(resource_path) as data_file:    
+			    settings = json.load(data_file)
+			
+			# create index
+			#response = self.es.indices.create(index=index, ignore=400, body=settings)
+			response = self.es.indices.put_template(name=index, body=settings)
+			logger.debug("Template %s created"  % response['acknowledged'])
 	
 	def list_projects(self):
 
