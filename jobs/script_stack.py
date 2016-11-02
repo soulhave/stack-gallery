@@ -29,7 +29,7 @@ r.createTemplateIfNotExits('stack')
 for project in projects:
 	key = project['key']
 	# add technologies list
-	logger.debug('starting %s' % key)
+	logger.info('starting %s' % key)
 	techs = r.list_stack(key)
 	project['stack_size'] = len(techs) if techs else 0
 	project['stack'] = techs
