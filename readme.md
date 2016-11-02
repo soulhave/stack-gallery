@@ -13,7 +13,6 @@ Stack is a tool that shows technology used in your product. There is a strong in
 ```console
 $ git clone https://github.com/marcuslacerda/stack-gallery.git
 $ cd stack-gallery
-$ python server.py
 ```
 
 You must define these environments on your variable. 
@@ -23,6 +22,13 @@ $ export GOOGLE_CLIENT_ID=set-google-client-id-here_or_export-env-vavariable>
 $ export GOOGLE_CLIENT_SECRET=set-google-client-secret-here_or_export-env-vavariable>
 $ export ELASTICSEARCH_URL=url-to-elasticsearch-stack
 ```
+
+Running server local
+
+```console
+$ python server.py
+```
+
 
 ## Running (by docker)
 
