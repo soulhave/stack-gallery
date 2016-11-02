@@ -1,4 +1,4 @@
-app.controller('StackController', ['$scope', '$mdDialog', '$resource', '$timeout', function($scope, $mdDialog, $resource, $timeout){
+app.controller('StackController', ['$scope', '$mdDialog', '$resource', '$timeout', '$mdSidenav', '$log', function($scope, $mdDialog, $resource, $timeout, $mdSidenav, $log){
 
   $scope.input = ''
 
@@ -21,6 +21,38 @@ app.controller('StackController', ['$scope', '$mdDialog', '$resource', '$timeout
     });
   };
 
+  //var StackApi = $resource('stack');
+  StackAPI.list(function(data){
+    $scope.projects = data;         
+  });
+
+  // ----------------------------
+  // -- Team view. Modal per stack id
+  // ----------------------------
+  $scope.showTeam = function(ev, id) {
+    // GET team for stack id
+    url = 'api/stacks/team/' + id
+    var TeamApi = $resource(url);
+    TeamApi.query(function(data){
+      $mdDialog.show({
+        controller: DialogController,
+        templateUrl: 'dialog-team',
+        targetEvent: ev,
+        locals : {team : data},
+        clickOutsideToClose: true,
+        escapeToClose: true
+      })
+      .then(function(answer) {
+        $scope.alert = 'You said the information was "' + answer + '".';
+      }, function() {
+        $scope.alert = 'You cancelled the dialog.';
+      });
+    });  
+  };
+
+  // ----------------------------
+  // -- Key press feature ng-keyup function
+  // ----------------------------
   $scope.keyPress = function(event){
     console.log(event.keyCode + ' - ' + event.altKey);
     // if keyCode = ENTER (#13) 
@@ -40,34 +72,94 @@ app.controller('StackController', ['$scope', '$mdDialog', '$resource', '$timeout
         $scope.showSearch = false
       }
     }
-  };
+  };  
 
-  //var StackApi = $resource('stack');
-  StackAPI.list(function(data){
-    $scope.projects = data;         
-  });
+  // ----------------------------
+  // -- Left NavBard
+  // ----------------------------
+  var TrendsAPI = $resource('api/trends/:action', 
+      { q : '@q' }, 
+      {
+        owners : { method : 'GET', params : {action : 'owners'}, isArray: true },
+        techs : { method : 'GET', params : {action : 'technologies'}, isArray: true }
+      }
+  );  
 
-  $scope.showTeam = function(ev, stack_id) {
-    // GET team for stack id
-    url = 'api/stacks/team/' + stack_id
-    var TeamApi = $resource(url);
-    TeamApi.query(function(data){
-      $mdDialog.show({
-        controller: DialogController,
-        templateUrl: 'dialog-team',
-        targetEvent: ev,
-        locals : {team : data},
-        clickOutsideToClose: true,
-        escapeToClose: true
-      })
-      .then(function(answer) {
-        $scope.alert = 'You said the information was "' + answer + '".';
-      }, function() {
-        $scope.alert = 'You cancelled the dialog.';
+  TrendsAPI.owners(function(data){
+    $scope.owners = data;         
+  });    
+
+  TrendsAPI.techs(function(data){
+    $scope.techs = data;         
+  });  
+
+  $scope.toggleLeft = function () {
+    $mdSidenav('left').toggle()
+      .then(function () {
+        $log.debug("close LEFT is done");
       });
-    });  
+  }
+
+  $scope.close = function () {
+    $mdSidenav('left').close()
+      .then(function () {
+        $log.debug("close LEFT is done");
+      });
+  };  
+
+  $scope.toggleLeft();
+
+  $scope.ownersSelected = [];
+  $scope.techsSelected = [];
+  /*
+   * Function called when checkbox is selected to filter
+   * stack cards. List ownersSelected and techsSelected 
+   * will be used
+   */
+  $scope.toggle = function (item, list) {
+    $log.debug('toggle')
+    var idx = list.indexOf(item);
+    if (idx > -1) {
+      list.splice(idx, 1);
+    }
+    else {
+      list.push(item);
+    }
+
+    // -- trigger search by owners and techs
+    // $log.debug(buildQueryParam('owner', list))
+    queryOwners = buildQueryParam('owner', $scope.ownersSelected)
+    queryTechs = buildQueryParam('stack.technologyName', $scope.techsSelected)
+    param =  queryOwners + ' AND ' + queryTechs
+    $log.debug('query parma: ' + param)
+    $log.debug("changeItem - searching");
+
+    StackAPI.search({ q: param }, function(data){
+      $scope.projects = data;
+    });    
+
   };
 
+  function buildQueryParam(field, list) {
+    if (list.length > 0) {    
+      var query = field + ':(';
+      var first = list[0];
+      query = query + first.name;
+      for (var i = 1; i < list.length; i++) {
+        item = list[i];
+        query = query + ' OR ' + item.name;
+      }
+      query = query + ')';
+      return query;
+    } else {
+      return '*';
+    }
+  }
+
+
+  // ----------------------------
+  // -- Favorite Actions
+  // ----------------------------
   $scope.likeCount = 2
 
   $scope.like = function(item) {

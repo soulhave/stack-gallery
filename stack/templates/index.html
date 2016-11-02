@@ -8,14 +8,11 @@
     <div layout="column" class="relative" layout-fill role="main" >
       <md-toolbar ng-show="!showSearch">
         <div class="md-toolbar-tools">
-          <md-button aria-label="Menu" ng-controller="LeftController" ng-click="toggleLeft()">
-            <ng-md-icon icon="menu"></ng-md-icon>
-          </md-button>
-          <md-button class="md-icon-button"  aria-label="Menu" ng-href="/">
+          <md-button class="md-icon-button"  aria-label="Menu" ng-click="toggleLeft()">
             <img class="logo" src="{{ url_for('static', filename='icon/logo_black.png') }}" >
           </md-button>          
           <h3>
-            Stack
+            <a href="/">Stack</a>
           </h3>
           <span flex></span>
           <md-button aria-label="Search" ng-click="showSearch = !showSearch">
@@ -26,7 +23,7 @@
       </md-toolbar>
       <md-toolbar class="md-hue-1" ng-show="showSearch">
         <div class="md-toolbar-tools">
-          <md-button class="md-icon-button"  aria-label="Menu" ng-href="/">
+          <md-button class="md-icon-button"  aria-label="Menu" ng-click="toggleLeft()">
             <img class="logo" src="{{ url_for('static', filename='icon/logo_black.png') }}">
           </md-button>            
           <h3 flex="10">
@@ -57,18 +54,18 @@
           <md-toolbar class="md-theme-indigo">
             <h1 class="md-toolbar-tools">Filters Options</h1>
           </md-toolbar>
-          <md-content layout-padding ng-controller="LeftController" >
+          <md-content layout-padding >
             <md-button ng-click="close()" class="md-primary" hide-gt-md>
               Close Filter Options
             </md-button>
             <p hide show-gt-md>
-              Use filters options to search what you want.
+              Trends to filter what you want.
             </p>
             <div layout="column">
               <span class=".md-subhead">Owners:</span>
               <md-divider style="padding-top:10px"></md-divider>
               <span ng-repeat="item in owners">
-                <md-checkbox ng-model="checkbox" aria-label="[[item.name]]" class="md-primary">
+                <md-checkbox ng-model="checkbox" aria-label="[[item.name]]" class="md-primary" ng-change="toggle(item, ownersSelected)">
                   [[item.name]] ([[item.count]])
                 </md-checkbox>
               </span>
@@ -76,7 +73,7 @@
               <span class=".md-subhead">Technologies:</span>
               <md-divider style="padding-top:10px"></md-divider>              
               <span ng-repeat="item in techs">
-                <md-checkbox ng-model="checkbox" aria-label="[[item.name]]" class="md-primary">
+                <md-checkbox ng-model="checkbox" aria-label="[[item.name]]" class="md-primary" ng-change="toggle(item, techsSelected)">
                   [[item.name]] ([[item.count]])
                 </md-checkbox>
               </span>
