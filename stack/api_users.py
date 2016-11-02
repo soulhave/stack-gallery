@@ -7,6 +7,8 @@ from flask import request, session, Response
 @app.route('/api/users/logged')
 @login_authorized
 def api_user_info(user):
+    print 'api_user_info'
+    print user
     token = user['oauth_token']
     user.pop('oauth_token', None)
 

@@ -1,0 +1,21 @@
+{
+    "DEBUG" : true,
+    "SECRET_KEY" : "SECRET_KEY",
+    "LOGGER" : [
+        {
+            "NAME":"stack",
+            "LEVEL": "DEBUG",
+            "LEVELNO":"10"
+        },  
+        {
+            "NAME":"elasticsearch",
+            "LEVEL": "DEBUG",
+            "LEVELNO":"10"
+        },
+        {
+            "NAME":"elasticsearch.trace", 
+            "LEVEL": "DEBUG",
+            "LEVELNO":"10"
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+{
+	"DEBUG" : false,
+	"SECRET_KEY" : "STACK-GALLERY-SECURITY-KEY",
+	"LOGGER" : [
+        {
+            "NAME":"stack",
+            "LEVEL": "INFO",
+            "LEVELNO":"20"
+        },	
+        {
+            "NAME":"elasticsearch",
+            "LEVEL": "INFO",
+            "LEVELNO":"20"
+        },
+        {
+            "NAME":"elasticsearch.trace", 
+            "LEVEL": "INFO",
+            "LEVELNO":"20"
+        }
+	]
+}

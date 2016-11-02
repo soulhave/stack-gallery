@@ -3,14 +3,13 @@ from stack.version import __version__
 from stack.security import login_authorized
 
 from flask import jsonify
-from elasticsearch import Elasticsearch
 from flask import request
-from stack import es_host
 import logging
+from elasticsearch import Elasticsearch
 
 logger = logging.getLogger('stack')
 
-config = {'elasticsearch':es_host}
+config = {'elasticsearch' : app.config['ELASTICSEARCH_URL']}
 
 @app.route('/api/version', methods = ['GET'])
 def api_version():
@@ -26,16 +25,16 @@ def api_stack(user):
 @app.route('/api/stacks/search', methods = ['GET'])
 @login_authorized
 def api_stack_search(user):
-	r = Database(config)
 	q = request.args.get('q')
+	r = Database(config)
 
 	return jsonify(r.search_stack(q))
 
 @app.route('/api/stacks/<id>', methods = ['GET'])
 @login_authorized
 def api_stack_id(id):
-	r = Database(config)
 	source = request.args.get('_source')
+	r = Database(config)
 
 	return jsonify(r.get_stack(id, source))
 
@@ -55,7 +54,6 @@ def api_team(user, id):
 	stack = r.get_stack(id, source)
 
 	return jsonify(stack['_source']['team'])
-
 
 
 class Database(object):

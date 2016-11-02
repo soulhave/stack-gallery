@@ -2,33 +2,24 @@ from stack import app
 from stack.security import login_authorized
 
 import requests
+import json
 from flask import request, session
+from flask import jsonify
 
-def get_technology(id, oauth_token):
-  url = 'https://tech-gallery.appspot.com/_ah/api/rest/v1/technology/%s' % id
-  headers = {'Authorization': oauth_token}
-  response = requests.get(url=url, headers= headers)
-
-  return response.text
-
-@app.route('/technology/<id>')
-def list_technology(user, id):
-  print ('user - %s' % user)
-  #print (request.headers)
-  url = 'https://tech-gallery.appspot.com/_ah/api/rest/v1/technology/%s' % id
-  response = requests.get(url=url)
-
-  return response.text
-
-@app.route('/technologies')
+@app.route('/api/technologies/<id>')
 @login_authorized
-def technologies(userid):
-  access_token = session.get('access_token')  
-  url = 'https://tech-gallery.appspot.com/_ah/api/rest/v1/technology'
-
-  oauth_token = 'OAuth ' + access_token[0]
-  headers = {'Authorization': oauth_token}
-  print('==> %s' % headers)
+def get_technology(user, id):
+  url = 'https://tech-gallery.appspot.com/_ah/api/rest/v1/technology/%s' % id
+  headers = {'Authorization': user['oauth_token']}
   response = requests.get(url=url, headers= headers)
 
-  return response.text
+  return jsonify(response.json())
+
+@app.route('/api/technologies/')
+@login_authorized
+def technologies(user):
+  url = 'https://tech-gallery.appspot.com/_ah/api/rest/v1/technology'
+  headers = {'Authorization': user['oauth_token']}
+  response = requests.get(url=url, headers= headers)
+
+  return jsonify(response.json())
