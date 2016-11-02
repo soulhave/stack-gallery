@@ -19,9 +19,9 @@ $ python server.py
 You must define these environments on your variable. 
 
 ```console
-export GOOGLE_CLIENT_ID=set-google-client-id-here_or_export-env-vavariable>
-export GOOGLE_CLIENT_SECRET=set-google-client-secret-here_or_export-env-vavariable>
-export ELASTICSEARCH_URL=url-to-elasticsearch-stack
+$ export GOOGLE_CLIENT_ID=set-google-client-id-here_or_export-env-vavariable>
+$ export GOOGLE_CLIENT_SECRET=set-google-client-secret-here_or_export-env-vavariable>
+$ export ELASTICSEARCH_URL=url-to-elasticsearch-stack
 ```
 
 ## Running (by docker)
