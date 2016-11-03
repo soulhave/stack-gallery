@@ -99,7 +99,7 @@ Search stack by query param. Query is passed by 'q' URL param
 #### Team Stack
 Get a team for stack id. A team is a list of users with email, login, image-url and name
 
-* **URL:** /api/stacks/team/<id>
+* **URL:** /api/stacks/team/:id
 * **Method:** GET
 * **Response**
 **Code:** 200 <br />

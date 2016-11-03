@@ -32,7 +32,7 @@ def api_stack_search(user):
 
 @app.route('/api/stacks/<id>', methods = ['GET'])
 @login_authorized
-def api_stack_id(id):
+def api_stack_id(user, id):
 	source = request.args.get('_source')
 	r = Database(config)
 
@@ -40,7 +40,7 @@ def api_stack_id(id):
 
 @app.route('/api/stacks/<id>', methods = ['POST'])
 @login_authorized
-def api_stack_post(id):
+def api_stack_post(user, id):
 	payload = request.json
 	print (payload)
 
