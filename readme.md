@@ -41,10 +41,12 @@ $ docker build -t stack-app:latest .
 Run the Docker container using the command shown below.
 
 ```console
-$ docker run -e ELASTICSEARCH_URL=http://localhost:9200 -p 5000:5000 stack-app
+$ docker run -e ELASTICSEARCH_URL=http://localhost:9200 -e GOOGLE_CLIENT_SECRET=<put-your-client-secret> -e GOOGLE_CLIENT_ID=<put-your-client-id> -p 5000:5000 stack-app
 ```
 
-If you need a full local enviroment, you must start [Elasticsearch] and change elasticsearch host at ELASTICSEARCH_URL variable
+If you need a full local enviroment, you must start [Elasticsearch] and change elasticsearch host at ELASTICSEARCH_URL variable. 
+
+You must configure these GOOGLE values from [Google APIs console]
 
 ```console
 $ run docker -p 9200:9200 elasticsearch
@@ -52,6 +54,7 @@ $ run docker -p 9200:9200 elasticsearch
 
 The application will be accessible at http://localhost:5000
 
+[Google APIs console]: https://code.google.com/apis/console
 [techgallery]: https://github.com/ciandt-dev/tech-gallery
 [knowledge]: https://github.com/marcuslacerda/tech-gallery-knowledgemap
 [Git]: http://help.github.com/set-up-git-redirect
