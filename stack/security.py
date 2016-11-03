@@ -67,7 +67,7 @@ def get_oauth_token():
     else:
         if 'Authorization' in request.headers:
             return request.headers['Authorization']
-        else:
+        else:   
             return None
 
 # put this in for example gauth.py

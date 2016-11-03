@@ -41,3 +41,17 @@
    border-radius:50%;
    box-shadow:0 0 1px #333;
 }
+
+
+#loading-bar .bar {
+  background: black;
+  z-index: 10;
+}
+#loading-bar-spinner .spinner-icon {
+  border-top-color:  black;
+  border-left-color: gray;
+}
+#loading-bar-spinner {
+  top: 70px;
+  left: 97%;
+}

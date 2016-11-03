@@ -6,7 +6,11 @@
   <!-- Angular Material style sheet -->
   <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="{{ static('css/loading-bar.min.css') }}">
+  
   <link type="text/css" rel="stylesheet" href="{{ static('css/style.css') }}" media="screen,projection"/>
+
+
 
 </head>
 <body ng-app="StarterApp" ng-cloak>
@@ -27,7 +31,11 @@
   
   <!-- Add angular module -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.1/angular-material-icons.min.js"></script>  
+
+  <script src="{{ static('js/loading-bar.min.js') }}"></script>
+
   
+
   <!-- Your application bootstrap  -->
   <script src="{{ static('js/app.js') }}" > </script>
   <script src="{{ static('js/stack.controller.js') }}" > </script>

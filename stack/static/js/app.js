@@ -2,7 +2,7 @@
 * You must include the dependency on 'ngMaterial' 
 */
 
-var app = angular.module('StarterApp', ['ngMaterial', 'ngMdIcons', 'ngResource']);
+var app = angular.module('StarterApp', ['ngMaterial', 'ngMdIcons', 'ngResource', 'ngAnimate', 'angular-loading-bar']);
 
 app.config(['$interpolateProvider', function ($interpolateProvider) {
   $interpolateProvider.startSymbol('[[');
