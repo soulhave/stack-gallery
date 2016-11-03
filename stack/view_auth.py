@@ -24,7 +24,9 @@ google = oauth.remote_app('google',
                           authorize_url='https://accounts.google.com/o/oauth2/auth',
                           request_token_url=None,
                           request_token_params={'scope': 'https://www.googleapis.com/auth/userinfo.email',
-                                                'response_type': 'code'},
+                                                'response_type': 'code',
+                                                'access_type' : 'offline',
+                                                'approval_prompt':'force'},
                           access_token_url='https://accounts.google.com/o/oauth2/token',
                           access_token_method='POST',
                           access_token_params={'grant_type': 'authorization_code'},
@@ -53,6 +55,7 @@ def logout():
 @app.route('/%s'% REDIRECT_URI)
 @google.authorized_handler
 def authorized(resp):
+    print resp
     access_token = resp[KEY_ACCESS_TOKEN]
 
     user = validate_token('OAuth %s' % access_token)
@@ -66,4 +69,5 @@ def authorized(resp):
 
 @google.tokengetter
 def get_access_token():
+    print '=====> get_access_token'
     return session.get(KEY_ACCESS_TOKEN)
