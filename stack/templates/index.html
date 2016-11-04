@@ -2,7 +2,6 @@
 
 {% block body %}
 
-  <!-- Container #1 (see wireframe) -->
   <body layout="row" ng-controller="StackController" ng-keyup="keyPress($event)">
 
     <div layout="column" class="relative" layout-fill role="main" >
@@ -81,9 +80,7 @@
 
         </md-sidenav>
 
-<!--
-        <md-content layout="row" class="md-padding" layout-wrap layout-align="center">
--->
+
         <md-content flex-sm="grow" flex-md="grow" flex-gt-md="80" layout="row" layout-wrap>
 
           <div class="stack-card" ng-repeat="item in projects">

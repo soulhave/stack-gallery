@@ -4,7 +4,7 @@ Stack is a tool that shows technology used in your product. There is a strong in
 
 ![screenshot from 2016-10-27 13-02-19](https://cloud.githubusercontent.com/assets/6742877/19829377/e83e0b94-9dbd-11e6-84d8-cbad124c8e0f.png)
 
-## Running (local setup)
+## Local installation (recommended for normal developers)
 [Git][] and [Python 2.7.9 ][Python]. For Python you need to install the following modules:
 * pip install flask
 * pip install requests
@@ -30,8 +30,7 @@ $ python server.py
 ```
 
 ## Running (by docker)
-
-Build the image using the following command
+You must install [Docker][] on your environment. After you can build the image using the following command.
 
 ```console
 $ git clone https://github.com/marcuslacerda/stack-gallery.git
@@ -54,6 +53,7 @@ $ run docker -p 9200:9200 elasticsearch
 
 The application will be accessible at http://localhost:5000
 
+[Docker]: https://docs.docker.com/engine/installation
 [Google APIs console]: https://code.google.com/apis/console
 [techgallery]: https://github.com/ciandt-dev/tech-gallery
 [knowledge]: https://github.com/marcuslacerda/tech-gallery-knowledgemap
