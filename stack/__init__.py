@@ -7,18 +7,19 @@ import logging
 mode = sys.argv[1] if len(sys.argv) > 1 else 'development'
 
 app = Flask('stack')
-# Function to easily find your assets
-# In your template use <link rel=stylesheet href="{{ static('filename') }}">
-app.jinja_env.globals['static'] = (
-    lambda filename: url_for('static', filename = filename)
-)
 
 ################
 #### config ####
 ################
 app.config.from_json('%s.json' % mode)
 
-app.config['TEMPLATES_AUTO_RELOAD'] = True
+# Function to easily find your assets
+# In your template use <link rel=stylesheet href="{{ static('filename') }}">
+app.jinja_env.globals['static'] = (
+    lambda filename: url_for('static', filename = filename)
+)
+
+
 app.config['GOOGLE_CLIENT_SECRET'] = get_environ(app.config, 'GOOGLE_CLIENT_SECRET')
 app.config['GOOGLE_CLIENT_ID'] = get_environ(app.config, 'GOOGLE_CLIENT_ID')
 app.config['ELASTICSEARCH_URL'] = get_environ(app.config, 'ELASTICSEARCH_URL')
@@ -38,7 +39,6 @@ if (2, 7) <= sys.version_info < (3, 2):
 logger = logging.getLogger('stack')
 logger.info('starting app => %s ' % id(app))
 logger.info('starting mode => %s ' % mode)
-
 
 ##############
 #### view ####

@@ -1,5 +1,6 @@
 {
     "DEBUG" : true,
+    "TEMPLATES_AUTO_RELOAD" : true,
     "SECRET_KEY" : "SECRET_KEY",
     "LOGGER" : [
         {
