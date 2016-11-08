@@ -4,10 +4,9 @@ from flask import Flask, url_for
 import sys
 import logging
 
-
 mode = sys.argv[1] if len(sys.argv) > 1 else 'development'
 
-app = Flask(__name__)
+app = Flask('stack')
 # Function to easily find your assets
 # In your template use <link rel=stylesheet href="{{ static('filename') }}">
 app.jinja_env.globals['static'] = (
@@ -19,6 +18,7 @@ app.jinja_env.globals['static'] = (
 ################
 app.config.from_json('%s.json' % mode)
 
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['GOOGLE_CLIENT_SECRET'] = get_environ(app.config, 'GOOGLE_CLIENT_SECRET')
 app.config['GOOGLE_CLIENT_ID'] = get_environ(app.config, 'GOOGLE_CLIENT_ID')
 app.config['ELASTICSEARCH_URL'] = get_environ(app.config, 'ELASTICSEARCH_URL')

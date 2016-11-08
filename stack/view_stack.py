@@ -2,14 +2,17 @@ from stack import app
 from stack.security import login_required, get_oauth_token
 
 from flask import render_template
+from datetime import datetime
+
+
 
 @app.after_request
 def after_request(response):
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "0"
-    response.headers['Cache-Control'] = 'public, max-age=0'
-    response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
+    response.headers["Expires"] = "-1"
+    response.headers['Last-Modified'] = datetime.now()
+
     
     oauth_token = get_oauth_token()
     if oauth_token: 
@@ -17,9 +20,14 @@ def after_request(response):
     return response
 
 @app.route('/')
-@login_required
 def index():
     return render_template('index.html')
+
+@app.route('/')
+@login_required
+def stacks():
+    return render_template('stacks.html')
+
 
 @app.route('/dialog-team')
 def dialog_team():
