@@ -23,6 +23,7 @@ app.controller('StackController', ['$scope', '$mdDialog', '$resource', '$timeout
 
   //var StackApi = $resource('stack');
   StackAPI.list(function(data){
+    console.log('list all')
     $scope.projects = data;         
   });
 
@@ -30,6 +31,7 @@ app.controller('StackController', ['$scope', '$mdDialog', '$resource', '$timeout
   // -- Team view. Modal per stack id
   // ----------------------------
   $scope.showTeam = function(ev, id) {
+    console.log('show team')
     // GET team for stack id
     url = 'api/stacks/team/' + id
     var TeamApi = $resource(url);
@@ -86,6 +88,7 @@ app.controller('StackController', ['$scope', '$mdDialog', '$resource', '$timeout
   );  
 
   TrendsAPI.owners(function(data){
+    console.log('list owners') 
     $scope.owners = data;         
   });    
 

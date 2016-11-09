@@ -65,7 +65,7 @@ def authorized(resp):
     else:  
       print ('USER LOGGED: %s' % user['email'])
       session[KEY_ACCESS_TOKEN] = access_token, ''
-      return redirect(url_for('index'))
+      return redirect(url_for('stacks'))
 
 @google.tokengetter
 def get_access_token():

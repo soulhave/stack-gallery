@@ -53,3 +53,4 @@ from stack import api_stacks
 from stack import api_users
 from stack import api_technologies
 from stack import api_trends
+from stack import api_auth

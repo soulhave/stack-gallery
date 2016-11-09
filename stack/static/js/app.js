@@ -2,7 +2,7 @@
 * You must include the dependency on 'ngMaterial' 
 */
 
-var app = angular.module('StarterApp', ['ngMaterial', 'ngMdIcons', 'ngResource', 'ngAnimate', 'angular-loading-bar']);
+var app = angular.module('StarterApp', ['ngMaterial', 'ngMdIcons', 'ngResource', 'ngAnimate', 'angular-loading-bar', 'satellizer']);
 
 app.config(['$interpolateProvider', function ($interpolateProvider) {
   $interpolateProvider.startSymbol('[[');
@@ -15,6 +15,16 @@ app.run(function ($http) {
         console.log('init app')
         console.log(data)
     });
+});
+
+
+app.config(function($authProvider) {
+
+    console.log('provider google configured')
+    $authProvider.google({
+      clientId: '146680675139-6fjea6lbua391tfv4hq36hl7kqo7cr96.apps.googleusercontent.com'
+    });
+
 });
 
 // auth interceptor to handle oauth token
@@ -49,7 +59,6 @@ app.factory('BearerAuthInterceptor', function ($rootScope, $q, $window) {
 app.config(function ($httpProvider) {
     $httpProvider.interceptors.push('BearerAuthInterceptor');
 });
-
 
 // config theme colors
 

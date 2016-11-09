@@ -2,74 +2,92 @@
 
 {% block body %}
 
-  <body layout="row">
+  <body>
 
     <div layout="column" class="relative" layout-fill role="main" >
 
       <md-toolbar ng-show="!showSearch">
-        <div class="md-toolbar-tools">
+        <div class="md-toolbar-tools" ng-controller="AuthController">
           <md-button class="md-icon-button"  aria-label="Menu" >
             <img class="logo" src="{{ url_for('static', filename='icon/logo_black.png') }}" >
           </md-button>          
           <h3>
-            <a href="/">Stack</a>
+            <a href="/stacks">Stack</a>
           </h3>
           <span flex></span>
+          <md-button class="md-raised md-hue-2" ng-if="isAuthenticated()"ng-click="logout()">Logout</md-button>          
         </div>
       </md-toolbar>
 
-      <div layout="column" >
-        <div layout="row" layout-align="center center">
-          <span class="md-display-1">Discover what other developers are using</span>
-          <div flex layout-align="center"> 
-            <div layout="column" layout-align="center center" >
+      <div layout="column" ng-controller="AuthController">
+        <div layout="row" style="height: 200px" layout-align="center center">
+          <div layout="row" hide-xs flex="70" layout-align="center center">
+            <span class="md-display-3">Discover what other developers are using</span>
+          </div>
+          <div flex> 
+            <div layout="column" layout-align="center center" ng-if="!isAuthenticated()">
               <h1 class="md-title">Please Log In</h1>
-              <md-button class="md-primary md-raised md-hue-2" ng-href="/login">Google Account</md-button>      
+              <div layout="row">
+                <img style="width: 36; height: 36; padding: 6px" src="{{ url_for('static', filename='icon/google-icon-128.png') }}" alt="Google">
+                <md-button class="md-primary md-raised md-hue-2" ng-click="authenticate('google')">Google Account</md-button>
+              </div>
             </div>
           </div>
         </div>
-        <div layout="row" layout-xs="column">
-          <div flex>
-            Share your development stack.
+        <div layout="row" layout-xs="column" layout-align="space-around start" class="md-title">
+          <div layout="column" layout-align="center center" style="width: 300px">
+            <div>
+              Share your development stack using <a href="https://goo.gl/4VV4PU" target="blank">knowledge map</a>
+            </div>
+            <div flex>
+              <img style="height: 200px" src="{{ url_for('static', filename='icon/knowledge_map_sample.png') }}" alt="Card Sample">
+            </div>
           </div>
-          <div flex>
-            IMAGE.
-          </div>
+          <div layout="column" layout-align="center center" style="width: 300px">
+            <div flex>
+              Improve your technical skills by learning about other <a href="/stacks">stacks.</a>
+            </div>
+            <div flex>
+              <img style="height: 200px" src="{{ url_for('static', filename='icon/tc_card_sample.png') }}" alt="Card Sample">
+            </div>
+          </div>          
+          <div layout="column" layout-align="center center" style="width: 300px">
+            <div flex>
+              Make better decision talking with other teams
+            </div>
+            <div flex>
+              IMAGE.
+            </div>
+          </div>          
         </div>
-        <div layout="row" layout-xs="column">
-          <div flex>
-            Improve your technical skills by learning with other teams.
-          </div>
-          <div flex>
-            IMAGE.
-          </div>
-        </div>   
-        <div layout="row" layout-align="center center" style="background: red; height: 50px">
+        
+        <div layout="row" flex style="min-height: 50px"></div> 
+
+        <div layout="row" layout-align="center center" style="background: gray; height: 150px">
             <span>To report a bug or an issue please email us. We are happy to get any feedback</span>           
         </div>     
-      </div>
+      </div>     
 
-      <md-toolbar class="md-medium-tall" style="max-height: 200px">        
+      <md-toolbar class="md-medium-tall" style="max-height: 200px; background: #BDBDBD;">        
         <div layout="column" flex>          
-          <div class="footer-links" layout="row" layout-align="space-around center">
+          <div class="footer-links" layout="row" layout-align="space-around start">
             <div layout="column">
               <span>Another Tools</span>
-              <a href="people.cit.com.br" target="blank">CI&T People</a>
-              <a href="https://techgallery.ciandt.com">Tech Gallery</a>
-              <a href="https://techanalytics.ciant.com">Tech Analytics</a>
+              <a href="https://people.cit.com.br" target="blank">CI&T People</a>
+              <a href="https://techgallery.ciandt.com" target="blank">Tech Gallery</a>
+              <a href="https://techanalytics.ciant.com" target="blank">Tech Analytics</a>
             </div>
 
             <div layout="column">
               <span>Stack</span>
-              <a href="/tst">Add Your Stack</a>
-              <a href="/tst">Stacks</a>
+              <a href="https://goo.gl/r95pJC" target="blank">Add Your Stack</a>
+              <a href="/stacks">Stacks</a>
             </div>
 
             <div layout="column">
               <span>Follow Us</span>
               <a href="/tst">Slack</a>
               <a href="/tst">github</a>
-              <a href="/tst">link1</a>
             </div>            
 
           </div>

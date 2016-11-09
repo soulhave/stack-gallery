@@ -1,8 +1,12 @@
+from stack import app
+
 from flask import redirect, url_for, session
 from flask import request, abort
 from functools import wraps
 from httplib2 import Http
 import json
+import jwt
+from datetime import datetime, timedelta
 
 def login_required(f):
     @wraps(f)
@@ -30,13 +34,16 @@ def login_authorized(fn):
     """
     @wraps(fn)
     def decorated_function(*args, **kwargs):
-        authorization = get_oauth_token()
+        authorization = parser_webtoken_token()
+
+        print ('login_authorized token ==> %s' % authorization )
+
         if not authorization: 
             # Unauthorized
             abort(401)
             return None
 
-        print ('login_authorized token ==> %s' % authorization )
+
         user = validate_token(authorization)
         if user is None:
             print("Check returned FAIL!")
@@ -59,16 +66,46 @@ def revoke_token(access_token):
     return resp
 
 
-def get_oauth_token():
-    access_token = session.get('access_token')
-    if access_token:
-        oauth_token = 'OAuth %s' % access_token[0]
-        return oauth_token
-    else:
-        if 'Authorization' in request.headers:
-            return request.headers['Authorization']
-        else:   
-            return None
+def parser_webtoken_token():
+    if 'Authorization' in request.headers:
+        print ('parse_token')
+        jweb_token = parse_token(request)
+        print (jweb_token)
+        access_token =  jweb_token['sub']
+
+        if access_token:
+            oauth_token = 'OAuth %s' % access_token
+            return oauth_token
+
+    return None
+
+
+def create_token(user):
+    payload = {
+        'sub': user.id,
+        'iat': datetime.utcnow(),
+        'exp': datetime.utcnow() + timedelta(days=14)
+    }
+    token = jwt.encode(payload, app.config['SECRET_KEY'])
+    return token.decode('unicode_escape')  
+
+
+def parse_token(req):
+    token = req.headers.get('Authorization').split()[1]
+    return jwt.decode(token, app.config['SECRET_KEY'])
+
+
+
+# def get_oauth_token():
+#     access_token = session.get('access_token')
+#     if access_token:
+#         oauth_token = 'OAuth %s' % access_token[0]
+#         return oauth_token
+#     else:
+#         if 'Authorization' in request.headers:
+#             return request.headers['Authorization']
+#         else:   
+#             return None
 
 # put this in for example gauth.py
 # ref: http://flask.pocoo.org/snippets/125/
