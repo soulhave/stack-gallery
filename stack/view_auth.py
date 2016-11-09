@@ -16,6 +16,7 @@ REDIRECT_URI = 'authorized'  # one of the Redirect URIs from Google APIs console
 VALID_EMAIL_DOMAIN = '@ciandt.com'
 KEY_ACCESS_TOKEN = 'access_token'
 
+
 # Google URL
 # https://accounts.google.com/.well-known/openid-configuration
 oauth = OAuth()

@@ -24,8 +24,10 @@ app.run(function ($http) {
 
 app.config(function($authProvider) {
 
-    console.log('provider google configured')
+    console.log('provider google configured offline')
     $authProvider.google({
+      optionalUrlParams: ['access_type'],
+      accessType: 'offline',
       clientId: '146680675139-6fjea6lbua391tfv4hq36hl7kqo7cr96.apps.googleusercontent.com'
     });
 
