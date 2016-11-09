@@ -19,7 +19,6 @@ app.jinja_env.globals['static'] = (
     lambda filename: url_for('static', filename = filename)
 )
 
-
 app.config['GOOGLE_CLIENT_SECRET'] = get_environ(app.config, 'GOOGLE_CLIENT_SECRET')
 app.config['GOOGLE_CLIENT_ID'] = get_environ(app.config, 'GOOGLE_CLIENT_ID')
 app.config['ELASTICSEARCH_URL'] = get_environ(app.config, 'ELASTICSEARCH_URL')
