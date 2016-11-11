@@ -1,5 +1,5 @@
 from stack import app 
-from stack.security import login_required, parser_webtoken_token
+from stack import security
 
 from flask import render_template
 from datetime import datetime

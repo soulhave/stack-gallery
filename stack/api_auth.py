@@ -6,13 +6,17 @@ from flask import request
 import requests
 import json
 import logging
+from datetime import datetime
 
 
 from elasticsearch import Elasticsearch
 
-# Using OAuth 2.0 to Access Google APIs
+# Using OAuth 2.0 to Access Google APIs. Login flow
 # https://developers.google.com/identity/protocols/OAuth2
-
+# https://developers.google.com/identity/protocols/OpenIDConnect#exchangecode
+# Step 1: (Browser) Send an authentication request to Google
+# Step 2: Exchange authorization code for access token.
+# Step 3: Retrieve information about the current user.
 
 @app.route('/auth/google', methods=['POST'])
 def google():
@@ -32,7 +36,7 @@ def google():
     print 'Google Payload =>'
     print payload
 
-    # Step 1. Exchange authorization code for access token.
+    # Step 2. Exchange authorization code for access token.
     r = requests.post(access_token_url, data=payload)
     print r
     token = json.loads(r.text)
@@ -40,34 +44,45 @@ def google():
     print token
 
     # Step 2. Retrieve information about the current user.
+    # create user if not exists one
     headers = {'Authorization': 'Bearer {0}'.format(token['access_token'])}
     r = requests.get(people_api_url, headers=headers)
     profile = json.loads(r.text)
     print 'Profile =>'
     print profile
 
-    r = requests.get('%s?access_token=%s' % (tokeninfo_url, token['access_token']))
-    token_info = json.loads(r.text)
-    print 'Tokeninfo =>'
-    print token_info
+    if security.is_valid_email(profile['email']):
+        # Step 4. Create a new account or return an existing one.
+        r = requests.get('%s?access_token=%s' % (tokeninfo_url, token['access_token']))
+        token_info = json.loads(r.text)
+        print 'Tokeninfo =>'
+        print token_info
+        # u = User(id=profile['sub'], provider='google',
+        #          display_name=profile['name'])    
 
-    # Step 4. Create a new account or return an existing one.
-    u = User(id=token['access_token'], google=profile['sub'],
-             display_name=profile['name'])
-    jwt = security.create_token(u)
-    print jwt
-    return jsonify(token=jwt)
+        # Step 5. Create a new account or return an existing one.
+        payload = {
+            'sub': token['access_token'],
+            'iat': datetime.utcnow(),
+            'exp': token_info['exp'],
+            'access_token':token['access_token']
+        }
+        jwt = security.create_token(payload)
+        print jwt
+        return jsonify(token=jwt)
+    else:
+        return not_authorized(403, 'Invalid email domain. Please sign with ciandt.com acccount')
 
 
-@app.route('/api/me')
-@security.login_authorized
-def me(user):
-    return jsonify(user)
+def not_authorized(status, error):
+    response = jsonify({'code': status,'message': error})
+    response.status_code = status
+    return response
 
 
 class User:
     def __init__(self, id, email=None, password=None, display_name=None,
-                 google=None):
+                 provider=None):
 
         self.id = id
         if email:
@@ -76,8 +91,8 @@ class User:
             self.password = password
         if display_name:
             self.display_name = display_name
-        if google:
-            self.google = google
+        if provider:
+            self.provider = provider
 
     def to_json(self):
         return dict(id=self.id, email=self.email, displayName=self.display_name,

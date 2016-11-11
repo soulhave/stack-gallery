@@ -13,7 +13,6 @@ GOOGLE_CLIENT_ID = app.config['GOOGLE_CLIENT_ID']
 GOOGLE_CLIENT_SECRET = app.config['GOOGLE_CLIENT_SECRET']
 REDIRECT_URI = 'authorized'  # one of the Redirect URIs from Google APIs console
 
-VALID_EMAIL_DOMAIN = '@ciandt.com'
 KEY_ACCESS_TOKEN = 'access_token'
 
 

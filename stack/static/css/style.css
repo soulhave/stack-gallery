@@ -59,3 +59,8 @@
 .footer-links a{
   font-size: 14px;
 }
+
+md-toast.error .md-toast-content {
+  background-color: red;
+}
+

@@ -6,10 +6,9 @@ app.controller('AuthController', ['$scope', '$http', '$location', '$auth', '$mdT
     return $auth.isAuthenticated();
   };
 
-
   $scope.authenticate = function(provider) {
     console.log('authenticate' + provider)
-    $auth.authenticate(provider)
+    $auth.authenticate(provider, {accessType: 'offline'})
       .then(function() {
         $mdToast.show(
           $mdToast.simple()
@@ -27,7 +26,7 @@ app.controller('AuthController', ['$scope', '$http', '$location', '$auth', '$mdT
             $mdToast.simple()
               .textContent(error.message)
               .position('top right')
-              .hideDelay(3000)
+              .hideDelay(5000)
           );                  
         } else if (error.data) {
           // HTTP response error from server
@@ -36,14 +35,14 @@ app.controller('AuthController', ['$scope', '$http', '$location', '$auth', '$mdT
             $mdToast.simple()
               .textContent(error.data.message + ' - ' + error.status)
               .position('top right')
-              .hideDelay(3000)
+              .hideDelay(5000).toastClass('error')
           );             
         } else {
           $mdToast.show(
             $mdToast.simple()
               .textContent(error)
               .position('top right')
-              .hideDelay(3000)
+              .hideDelay(5000)
           );   
         }
       });        

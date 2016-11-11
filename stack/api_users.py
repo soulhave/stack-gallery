@@ -17,7 +17,7 @@ def api_user_info(user):
 
     return response
 
-@app.route('/api/users/authorized')
+@app.route('/api/users/me')
 @login_authorized
 def api_user_detail(user):    
     return jsonify(user)

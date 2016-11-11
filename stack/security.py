@@ -8,15 +8,20 @@ import json
 import jwt
 from datetime import datetime, timedelta
 
+VALID_EMAIL_DOMAIN = '@ciandt.com'
+
+
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        access_token = session.get('access_token')
-        if access_token is None:
-          print ('==> not logged. Redirect to the signin page')
-          # use for How To: Redirect back to current page after sign in, sign out, sign up
-          # redirect(url_for('signin', next=request.url))
-          return redirect(url_for('signin'))
+        authorization = parser_webtoken_token()
+
+        print ('login_authorized token ==> %s' % authorization )
+
+        if not authorization: 
+            # Unauthorized
+            # redirect(url_for('signin', next=request.url))
+            return redirect(url_for('signin'))
         return f(*args, **kwargs)
     return decorated_function
 
@@ -71,7 +76,7 @@ def parser_webtoken_token():
         print ('parse_token')
         jweb_token = parse_token(request)
         print (jweb_token)
-        access_token =  jweb_token['sub']
+        access_token =  jweb_token['access_token']
 
         if access_token:
             oauth_token = 'OAuth %s' % access_token
@@ -80,20 +85,17 @@ def parser_webtoken_token():
     return None
 
 
-def create_token(user):
-    payload = {
-        'sub': user.id,
-        'iat': datetime.utcnow(),
-        'exp': datetime.utcnow() + timedelta(days=14)
-    }
+def create_token(payload):
     token = jwt.encode(payload, app.config['SECRET_KEY'])
     return token.decode('unicode_escape')  
-
 
 def parse_token(req):
     token = req.headers.get('Authorization').split()[1]
     return jwt.decode(token, app.config['SECRET_KEY'])
 
+
+def is_valid_email(email):
+    return VALID_EMAIL_DOMAIN in email
 
 
 # def get_oauth_token():

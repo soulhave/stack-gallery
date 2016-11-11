@@ -26,8 +26,9 @@ app.config(function($authProvider) {
 
     console.log('provider google configured offline')
     $authProvider.google({
-      optionalUrlParams: ['access_type'],
+      optionalUrlParams: ['access_type', 'approval_prompt'],
       accessType: 'offline',
+      approvalPrompt: 'auto',
       clientId: '146680675139-6fjea6lbua391tfv4hq36hl7kqo7cr96.apps.googleusercontent.com'
     });
 
