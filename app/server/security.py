@@ -1,4 +1,4 @@
-from server import app
+from server import app, logger
 
 from flask import jsonify, redirect, url_for, session
 from flask import request, abort
@@ -6,6 +6,7 @@ from functools import wraps
 from httplib2 import Http
 import json
 import jwt
+from jwt import DecodeError, ExpiredSignature
 from datetime import datetime, timedelta
 
 VALID_EMAIL_DOMAIN = '@ciandt.com'
@@ -34,6 +35,8 @@ def login_authorized(fn):
         try:
             json_web_token = parse_token(request)
             access_token = get_oauth_token(json_web_token)
+
+            logger.debug('access_token: %s' % access_token)
 
             user = validate_token(access_token)
             if user is None:
@@ -86,19 +89,6 @@ def is_valid_email(email):
     return VALID_EMAIL_DOMAIN in email
 
 
-# def get_oauth_token():
-#     access_token = session.get('access_token')
-#     if access_token:
-#         oauth_token = 'OAuth %s' % access_token[0]
-#         return oauth_token
-#     else:
-#         if 'Authorization' in request.headers:
-#             return request.headers['Authorization']
-#         else:   
-#             return None
-
-# put this in for example gauth.py
-# ref: http://flask.pocoo.org/snippets/125/
 def validate_token(access_token):
     '''Verifies that an access-token is valid and
     meant for this app.

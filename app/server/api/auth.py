@@ -7,14 +7,12 @@ import json
 import logging
 from datetime import datetime
 
-
 # Using OAuth 2.0 to Access Google APIs. Login flow
 # https://developers.google.com/identity/protocols/OAuth2
 # https://developers.google.com/identity/protocols/OpenIDConnect#exchangecode
 # Step 1: (Browser) Send an authentication request to Google
 # Step 2: Exchange authorization code for access token.
 # Step 3: Retrieve information about the current user.
-
 @app.route('/auth/google', methods=['POST'])
 def google():
     access_token_url = 'https://www.googleapis.com/oauth2/v4/token'
@@ -75,7 +73,6 @@ def not_authorized(status, error):
     response = jsonify({'code': status,'message': error})
     response.status_code = status
     return response
-
 
 class User:
     def __init__(self, id, email=None, password=None, display_name=None,

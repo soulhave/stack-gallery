@@ -34,14 +34,6 @@ def api_stack_id(user, id):
 
 	return jsonify(r.get_stack(id, source))
 
-@app.route('/api/stacks/<id>', methods = ['POST'])
-@security.login_authorized
-def api_stack_post(user, id):
-	payload = request.json
-	print (payload)
-
-	return id, 200
-
 @app.route('/api/stacks/team/<id>', methods = ['GET'])
 @security.login_authorized
 def api_team(user, id):
@@ -50,6 +42,15 @@ def api_team(user, id):
 	stack = r.get_stack(id, source)
 
 	return jsonify(stack['_source']['team'])
+
+@app.route('/api/stacks/<id>', methods = ['POST'])
+@security.login_authorized
+def api_stack_post(user, id):
+	payload = request.json
+	print (payload)
+
+	return id, 200
+
 
 
 class Database(object):

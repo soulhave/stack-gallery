@@ -2,7 +2,6 @@ app.controller('AuthController', ['$scope', '$http', '$location', '$auth', '$mdT
   function($scope, $http, $location, $auth, $mdToast){
 
   $scope.isAuthenticated = function() {
-    console.log('isAuthenticated - ' + $auth.isAuthenticated())
     return $auth.isAuthenticated();
   };
 
