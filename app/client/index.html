@@ -1,0 +1,75 @@
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stack Gallery</title>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="css/loading-bar.min.css">
+  
+  <link type="text/css" rel="stylesheet" href="css/style.css" media="screen,projection"/>
+
+</head>
+<body ng-app="StarterApp" ng-cloak>
+ 
+    <div layout="column" class="relative" layout-fill role="main" >
+
+      <!-- ui-routes - SPA -->
+      <div ui-view></div>
+
+      <md-toolbar class="md-medium-tall" style="max-height: 200px; background: #BDBDBD;">        
+        <div layout="column" flex>          
+          <div class="footer-links" layout="row" layout-align="space-around start">
+            <div layout="column">
+              <span>Another Tools</span>
+              <a href="https://people.cit.com.br" target="blank">CI&T People</a>
+              <a href="https://techgallery.ciandt.com" target="blank">Tech Gallery</a>
+              <a href="https://techanalytics.ciant.com" target="blank">Tech Analytics</a>
+            </div>
+
+            <div layout="column">
+              <span>Stack</span>
+              <a href="https://goo.gl/r95pJC" target="blank">Add Your Stack</a>
+              <a href="/stacks">Stacks</a>
+            </div>
+
+            <div layout="column">
+              <span>Follow Us</span>
+              <a href="/tst">Slack</a>
+              <a href="/tst">github</a>
+            </div>
+          </div>
+        </div>
+      </md-toolbar>  
+
+    </div>    
+  
+  <!-- Angular Material requires Angular.js Libraries -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="https://code.angularjs.org/1.5.5/angular-resource.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+  <!-- Angular Material Library -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+  
+  <!-- Add angular module -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.1/angular-material-icons.min.js"></script>  
+  <script src="vendor/angular-ui-router.js"></script>
+  <script src="https://cdn.jsdelivr.net/satellizer/0.15.5/satellizer.min.js"></script>
+
+  <script src="vendor/loading-bar.min.js"></script>  
+
+  <!-- Your application bootstrap  -->
+  <script src="app.js" > </script>
+  <script src="controllers/stack.controller.js" > </script>  
+  <script src="controllers/auth.controller.js" > </script>
+  <script src="controllers/home.controller.js" > </script>
+  <script src="controllers/stack.controller.js" > </script>
+  <script src="controllers/profile.controller.js" > </script>
+
+  <script src="services/account.js" > </script>
+
+</body>
+</html>

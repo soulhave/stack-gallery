@@ -7,19 +7,16 @@ RUN apt-get install -y python-pip curl
 RUN mkdir /app
 RUN chmod +x /app
 
-COPY server.py /app
-
-ADD stack /app/stack
+ADD app /app
 
 RUN pip install flask
-RUN pip install Flask-OAuth
 RUN pip install requests
 RUN pip install elasticsearch
 RUN pip install httplib2
+RUN pip install PyJWT
 
 WORKDIR /app
-# not work
-#RUN pip install -r requirements.txt
+# -r is not working -> RUN pip install -r requirements.txt
 
 ENTRYPOINT ["python"]
-CMD ["server.py"]
+CMD ["run.py"]
