@@ -108,9 +108,9 @@ $scope.finishSearch = function() {
     $scope.owners = data;         
   });    
 
-  TrendsAPI.techs(function(data){
-    $scope.techs = data;         
-  });  
+  // TrendsAPI.techs(function(data){
+  //   $scope.techs = data;         
+  // });  
 
   $scope.toggleLeft = function () {
     $mdSidenav('left').toggle()

@@ -14,7 +14,7 @@ config = {'elasticsearch' : app.config['ELASTICSEARCH_URL']}
 def api_trends_owners(user):
   database = Database(config)
 
-  return jsonify(database.search_trends_owners(5))
+  return jsonify(database.search_trends_owners(15))
 
 @app.route('/api/trends/technologies')
 @login_authorized
