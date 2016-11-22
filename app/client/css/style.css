@@ -68,6 +68,25 @@ md-toast.error .md-toast-content {
   height: 48px
 }
 
+#feedback {
+  background: gray; 
+  height: 150px
+}
+
+#feedback span {
+  font-size: 28px
+}
+
+#feedback a {
+     color: #fff;
+     font-size: 28px
+     padding-top: 10px
+}
+
+#feedback a:hover {
+     color: #1A237E;
+}
+
 #footer {
   min-height: 150px; 
   background: #424242;
@@ -84,5 +103,5 @@ md-toast.error .md-toast-content {
 }
 
 #footer a:hover {
-     color: #0690fa;
+     color: #1A237E;
 }
