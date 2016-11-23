@@ -10,7 +10,7 @@ app.controller('HomeController', ['$scope', '$http', '$auth', function($scope, $
             $scope.forks = data.data.forks;
           }
           if (data.data.open_issues) {
-            $scope.issues = data.data.open_issues;
+            $scope.open_issues = data.data.open_issues;
           }
         }
       });
