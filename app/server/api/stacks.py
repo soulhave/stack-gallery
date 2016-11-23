@@ -1,4 +1,4 @@
-from server import app
+from server import app, logger
 from server.version import __version__
 from server import security
 
@@ -6,8 +6,6 @@ from flask import jsonify
 from flask import request
 import logging
 from elasticsearch import Elasticsearch
-
-logger = logging.getLogger('stack')
 
 config = {'elasticsearch' : app.config['ELASTICSEARCH_URL']}
 
@@ -47,7 +45,6 @@ def api_team(user, id):
 @security.login_authorized
 def api_stack_post(user, id):
 	payload = request.json
-	print (payload)
 
 	return id, 200
 
@@ -101,7 +98,6 @@ class Database(object):
 
 	def get_stack(self, id, source):
 		if source:
-			print source
 			return self.es.get(index='stack', doc_type='setting', id=id, _source=source)
 		else:
 			return self.es.get(index='stack', doc_type='setting', id=id)

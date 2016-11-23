@@ -59,7 +59,7 @@ def login_authorized(fn):
 
 def revoke_token(access_token):
     h = Http()
-    print ('revoking %s' % access_token)
+    logger.debug('revoking %s' % access_token)
     resp, cont = h.request('https://accounts.google.com/o/oauth2/revoke?token=%s' % access_token,
                            headers={'Host': 'www.googleapis.com',
                                     'Authorization': access_token})

@@ -1,4 +1,4 @@
-from server import app
+from server import app, logger
 from server.security import login_authorized
 
 import requests
@@ -6,7 +6,6 @@ from flask import jsonify
 import logging
 from elasticsearch import Elasticsearch
 
-logger = logging.getLogger('stack')
 config = {'elasticsearch' : app.config['ELASTICSEARCH_URL']}
 
 @app.route('/api/trends/owners')
