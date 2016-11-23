@@ -14,9 +14,31 @@
       <md-button aria-label="Search" ng-click="startSearch()">
         <ng-md-icon icon="search"></ng-md-icon>
       </md-button>          
-      <section ng-controller="AuthController" >
-<!--         <md-button class="md-raised md-hue-2" ng-href="/#/profile">Profile</md-button> -->
-        <md-button class="md-raised md-hue-2" ng-click="logout()" hide show-gt-md>Logout</md-button>
+      <section ng-controller="AuthController">
+        <md-menu md-position-mode="target-left target" ng-if="isAuthenticated()" hide show-gt-md>
+          <md-button aria-label="Open demo menu" class="md-icon-button" style="height: 60px!important; width: 60px!important" ng-click="$mdOpenMenu($event)">
+            <img src="[[user.picture]]" class="avatar">
+          </md-button>
+
+          <md-menu-content width="4" >
+            <md-menu-item>
+              <md-button ng-href="/#/profile">
+                  <div layout="row" flex>
+                    <p flex>Profile</p>
+                    <md-icon md-menu-align-target md-svg-icon="call:portable-wifi-off" style="margin: auto 3px auto 0;"></md-icon>
+                  </div>
+              </md-button>
+            </md-menu-item>  
+            <md-menu-item>
+              <md-button ng-click="logout()">
+                  <div layout="row" flex>
+                    <p flex>Logout</p>
+                    <md-icon md-menu-align-target md-svg-icon="call:portable-wifi-off" style="margin: auto 3px auto 0;"></md-icon>
+                  </div>
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
       </section>
     </div>
   </md-toolbar>

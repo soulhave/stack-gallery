@@ -1,9 +1,22 @@
-app.controller('AuthController', ['$scope', '$http', '$location', '$auth', '$mdToast', 
-  function($scope, $http, $location, $auth, $mdToast){
+app.controller('AuthController', ['$scope', '$http', '$location', '$auth', '$mdToast', 'Account', 
+  function($scope, $http, $location, $auth, $mdToast, Account){
 
   $scope.isAuthenticated = function() {
     return $auth.isAuthenticated();
   };
+
+  // TODO - use Account resources
+  if ($auth.isAuthenticated()) {
+    Account.getProfile()
+      .then(function(response) {
+        console.log(response.data)
+        $scope.user = response.data;
+      })
+      .catch(function(response) {
+        console.log('ERROR')
+        console.log(response)
+      });
+  }  
 
   $scope.authenticate = function(provider) {
     console.log('authenticate' + provider)
