@@ -49,7 +49,7 @@ def api_stack_post(user, id):
 	return id, 200
 
 
-@app.route('/api/whoknows', methods = ['GET'])
+@app.route('/api/public/whoknows', methods = ['GET'])
 def api_whoknows_post():
   q = request.args.get('q')
   r = Database(config)
@@ -62,7 +62,13 @@ def api_whoknows_post():
     }
   }
 
-  return jsonify(r.search_by_query(index="skill", query=query))
+  data = r.search_by_query(index="skill", query=query)
+
+  list_stack = []
+  for item in data['hits']['hits']:
+    list_stack.append(item['_source'])
+
+  return jsonify(list_stack)
 
 
 
