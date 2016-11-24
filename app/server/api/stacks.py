@@ -49,6 +49,22 @@ def api_stack_post(user, id):
 	return id, 200
 
 
+@app.route('/api/whoknows', methods = ['GET'])
+def api_whoknows_post():
+  q = request.args.get('q')
+  r = Database(config)
+
+  query = {
+    "query": {
+        "query_string": {
+           "query": q
+        }        
+    }
+  }
+
+  return jsonify(r.search_by_query(index="skill", query=query))
+
+
 
 class Database(object):
 	def __init__(self, config):
