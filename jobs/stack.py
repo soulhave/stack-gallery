@@ -152,7 +152,7 @@ class Stack(object):
 
 		black_list = {'Backbone.js':'backbone.js', 
 			'Calabash':'cabalash', 
-			'Node.JS':'node.js', 
+			'node.js':'node.js', 
 			'ASP.NET Core':'asp.net_core', 
 			'ASP.Net WebForms': 'asp.net_webforms',
 			'ASP.Net WebAPI': 'asp.net_webapi',
@@ -172,7 +172,7 @@ class Stack(object):
 				for tech in item['stack']:
 					tech_name = tech
 					if tech_name:
-						if tech_name in black_list:
+						if (tech_name in black_list) or (tech_name.lower in black_list):
 							tech_key = black_list[tech_name]
 						else:
 							tech_key = re.sub('[#/ ]', '_', re.sub('[^\x00-\x7F]', '_', re.sub('[.]', '', tech_name.lower())))
