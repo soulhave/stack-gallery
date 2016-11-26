@@ -2,8 +2,11 @@ import os
 import logging
 import re
 from elasticsearch import Elasticsearch
-from techgallery import TechGallery
 import json
+
+from techgallery import TechGallery
+import config
+
 
 logger = logging.getLogger('stack')
 logger.addHandler(logging.NullHandler())
@@ -11,11 +14,40 @@ logger.addHandler(logging.NullHandler())
 logger.setLevel(logging.DEBUG)
 
 
-class Repository(object):
+class Stack(object):
 
-	def __init__(self, config):
-		self.es = Elasticsearch([config['elasticsearch']])	
-		self.tc = TechGallery({'endpoint':'https://tech-gallery.appspot.com/_ah/api/rest/v1'})
+	def __init__(self):
+		self.config = config.load()
+		self.es = Elasticsearch([self.config['repository']['elasticsearch']['host']])	
+		self.tc = TechGallery(self.config['techgallery'])
+
+
+	def load_stack(self, project):
+		"""
+			project must have a structure like this:
+				doc = {
+					"key": - id
+					"owner" : 
+					"name" : 
+					"index" : 
+				}
+
+		"""
+
+		self.createTemplateIfNotExits('stack')
+
+		key = project['key']
+		# add technologies list
+		techs = self.list_stack(key)
+		project['stack_size'] = len(techs) if techs else 0
+		project['stack'] = techs
+		# add team members
+		team = self.list_team(key)
+		project['team_size'] = len(team) if team else 0
+		project['team'] = team
+		## save document
+		self.save_document('stack', 'setting', project, key)
+
 
 	def createTemplateIfNotExits(self, index):
 		"""if template doesn't exists, create one from json file definition 
@@ -173,7 +205,6 @@ class Repository(object):
 				for login in item['team']:
 					doc = {
 						"login" : login,
-						"name": 'nome completo',
 						"email": '%s@ciandt.com'%login,
 						"image": "https://citweb.cit.com.br/ipeople/photo?cdLogin=%s"%login
 					}
@@ -184,7 +215,7 @@ class Repository(object):
 
 	def save_document(self, index, doc_type, document, id=None):
 		res = self.es.index(index=index, doc_type=doc_type, body=document, id=id)
-		logger.info("Created documento ID %s" % res['_id'])
+		logger.debug("Created documento ID %s" % res['_id'])
 
 
 	def exists(self, index, doc_type, id):

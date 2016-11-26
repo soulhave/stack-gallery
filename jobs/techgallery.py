@@ -1,8 +1,5 @@
 import requests
 
-#username = raw_input("Enter Username for basic auth. Default admin => ") or "admin"
-#password = raw_input("Enter Password. Default admin => ") or "admin"
-
 class TechGallery(object):
 	""" 
 
@@ -17,10 +14,10 @@ class TechGallery(object):
 		url = '%s/profile?email=%s@ciandt.com' %(self.endpoint,login)
 		response = requests.get(url=url)
 		# TODO: throw exception if response.status_code <> 200
-		return response.json();
+		return response.json(), response.status_code;
 
 	def technology(self, id):
 		url = '%s/technology/%s' %(self.endpoint,id)
 		response = requests.get(url=url)
 
-		return response.json()
+		return response.json(), response.status_code
