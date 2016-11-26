@@ -49,6 +49,33 @@ def api_stack_post(user, id):
 	return id, 200
 
 
+@app.route('/api/public/whoknows', methods = ['GET'])
+def api_whoknows_post():
+  q = request.args.get('q')
+  top = request.args.get('top') or 10
+  r = Database(config)
+
+  query = {
+      "sort" : [
+          { "endorsementsCount" : "desc" },
+          { "skillLevel" : "desc"}
+      ],    
+      "query": {
+          "query_string": {
+             "query": q
+          }
+      }
+  }
+
+  data = r.search_by_query(index="skill", query=query, size=top)
+
+  list_stack = []
+  for item in data['hits']['hits']:
+    list_stack.append(item['_source'])
+
+  return jsonify(list_stack)
+
+
 
 class Database(object):
 	def __init__(self, config):
@@ -58,11 +85,11 @@ class Database(object):
 		res = self.es.index(index=index, doc_type=document_type, body=document, id=id)
 		logger.debug("Created documento ID %s" % res['_id'])
 
-	def search_by_query(self, index, query):
+	def search_by_query(self, index, query, size):
 		"""
 		Sample of query: {"query": {"match_all": {}}}
 		"""
-		resp = self.es.search(index=index, body=query, size=2500)
+		resp = self.es.search(index=index, body=query, size=size)
 		logger.debug("%d documents found" % resp['hits']['total'])
 		
 		return resp
@@ -77,7 +104,7 @@ class Database(object):
 		}
 		logger.debug('query %s' % query) 
 
-		data = self.search_by_query('stack', query)
+		data = self.search_by_query('stack', query, 2500)
 		list_stack = []
 		for item in data['hits']['hits']:
 			list_stack.append(item['_source'])
