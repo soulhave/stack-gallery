@@ -167,7 +167,7 @@ class Stack(object):
 						image = 'https://techgallery.ciandt.com/assets/images/placeholder.png'
 						
 						## workaround: techgallery image has no pattern for url name
-						tc_tech = self.tc.technology(tech_key)
+						(tc_tech, status_code) = self.tc.technology(tech_key)
 						if 'image' in tc_tech:
 							logger.debug(tc_tech['image'])
 							image = tc_tech['image']
