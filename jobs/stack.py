@@ -150,14 +150,14 @@ class Stack(object):
 		    }}
 		}
 
-		black_list = {'Backbone.js':'backbone.js', 
-			'Calabash':'cabalash', 
+		black_list = {'backbone.js':'backbone.js', 
+			'calabash':'cabalash', 
 			'node.js':'node.js', 
-			'ASP.NET Core':'asp.net_core', 
-			'ASP.Net WebForms': 'asp.net_webforms',
-			'ASP.Net WebAPI': 'asp.net_webapi',
-			'ASP.Net MVC': 'asp.net_mvc',
-			'Quartz.Net': 'quartz.net'
+			'asp.net core':'asp.net_core', 
+			'asp.net webforms': 'asp.net_webforms',
+			'asp.net webapi': 'asp.net_webapi',
+			'asp.net mvc': 'asp.net_mvc',
+			'quartz.net': 'quartz.net'
 		}
 
 		stack = []
@@ -172,8 +172,8 @@ class Stack(object):
 				for tech in item['stack']:
 					tech_name = tech
 					if tech_name:
-						if (tech_name in black_list) or (tech_name.lower in black_list):
-							tech_key = black_list[tech_name]
+						if tech_name.lower() in black_list:
+							tech_key = black_list[tech_name.lower()]
 						else:
 							tech_key = re.sub('[#/ ]', '_', re.sub('[^\x00-\x7F]', '_', re.sub('[.]', '', tech_name.lower())))
 						image = 'https://techgallery.ciandt.com/assets/images/placeholder.png'
