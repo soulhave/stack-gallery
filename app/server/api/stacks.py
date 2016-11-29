@@ -50,7 +50,7 @@ def api_stack_post(user, id):
 
 
 @app.route('/api/public/whoknows', methods = ['GET'])
-def api_whoknows_post():
+def api_whoknows_get():
   q = request.args.get('q')
   top = request.args.get('top') or 10
   r = Database(config)
@@ -75,6 +75,30 @@ def api_whoknows_post():
 
   return jsonify(list_stack)
 
+@app.route('/api/public/whichprojectuses', methods = ['GET'])
+def api_whichprojectuses_get():
+  q = request.args.get('q')
+  top = request.args.get('top') or 10
+  r = Database(config)
+
+  query = {
+      "sort" : [
+          { "achieve" : "desc" }
+      ],
+      "query": {
+          "query_string": {
+             "query": q
+          }
+      }
+  }
+
+  data = r.search_by_query(index="knowledge", query=query, size=top)
+
+  list_stack = []
+  for item in data['hits']['hits']:
+    list_stack.append(item['_source'])
+
+  return jsonify(list_stack)
 
 
 class Database(object):
