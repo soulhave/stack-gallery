@@ -94,6 +94,15 @@ class TechAnalytics(object):
 					repository.createTemplateIfNotExits('skill')
 					repository.saveDocument('skill', 'technology', doc)
 
+
+	def delete_sheet(self, sheet_id):
+		repository = self.repository
+		q = "sheet_id:"+sheet_id
+		repository.deleteByQuery('project', q)					
+		## delete sheet_id from knowledge
+		repository.deleteByQuery('knowledge', q)
+		repository.deleteByQuery('stack', 'key:'+sheet_id)
+
 	
 	# https://developers.google.com/sheets/reference/rest/v4/spreadsheets/get
 	def load_knowledge_map(self, sheet=None, notify=False):

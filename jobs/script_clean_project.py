@@ -11,7 +11,6 @@ logger.setLevel(logging.DEBUG)
 logging.getLogger('elasticsearch').setLevel(logging.ERROR)
 
 ta = TechAnalytics()
-sheet = None
-#sheet = '1bXdyhDH8jRjjwBilFIeXjPywGEegHuS8jS3hd6VMLqM'
+sheet_id = '1G-XbX5p7C4_qmhdjJ7U0LKH02BFJroPrmcOMvoSZIRY'
 
-ta.load_knowledge_map(sheet=sheet, notify=False)
+ta.delete_sheet(sheet_id=sheet_id)
