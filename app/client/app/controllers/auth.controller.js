@@ -29,7 +29,7 @@ app.controller('AuthController', ['$scope', '$http', '$location', '$auth', '$mdT
             .hideDelay(3000)
         );        
         // toastr.success('You have successfully signed in with ' + provider + '!');
-        $location.path('/stacks');
+        $location.path('/#/stacks');
       })
       .catch(function(error) {
         if (error.message) {

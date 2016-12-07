@@ -8,12 +8,44 @@ var app = angular.module('StarterApp', ['ngMaterial',
   'ngAnimate', 
   'angular-loading-bar',
   'ui.router', 
-  'satellizer']);
+  'satellizer',
+  'angular-google-analytics']);
 
 app.config(['$interpolateProvider', function ($interpolateProvider) {
   $interpolateProvider.startSymbol('[[');
   $interpolateProvider.endSymbol(']]');
 }]);
+
+
+app.config(['AnalyticsProvider', function (AnalyticsProvider) {
+   // Add configuration code as desired
+   AnalyticsProvider.setAccount('UA-88644810-1');  //UU-XXXXXXX-X should be your tracking code
+
+  // Track all routes (default is true).
+  AnalyticsProvider.trackPages(true);
+
+  // Track all URL query params (default is false).
+  AnalyticsProvider.trackUrlParams(true);
+
+  // Change the default page event name.
+  // Helpful when using ui-router, which fires $stateChangeSuccess instead of $routeChangeSuccess.
+  AnalyticsProvider.setPageEvent('$stateChangeSuccess');
+
+  // RegEx to scrub location before sending to analytics.
+  // Internally replaces all matching segments with an empty string.
+  AnalyticsProvider.setRemoveRegExp(/\/\d+?$/);
+
+  // Activate reading custom tracking urls from $routeProvider config (default is false)
+  // This is more flexible than using RegExp and easier to maintain for multiple parameters.
+  // It also reduces tracked pages to routes (only those with a templateUrl) defined in the
+  // $routeProvider and therefore reduces bounce rate created by redirects.
+  // NOTE: The following option requires the ngRoute module
+  AnalyticsProvider.readFromRoute(true);
+  // Add custom routes to the $routeProvider like this. You can also exclude certain routes from tracking by
+  // adding 'doNotTrack' property
+
+
+}]).run(['Analytics', function(Analytics) { }]);
 
 
 app.run(function ($http) {

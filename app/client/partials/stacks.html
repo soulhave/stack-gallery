@@ -101,7 +101,7 @@
 
                 <div layout="row" style="padding-top: 5px" />
                     <div flex layout="column" />
-                      <md-button target="_blank" ng-href="https://docs.google.com/spreadsheets/d/[[item.key]]">[[item.name]]</md-button>
+                      <md-button target="_blank" ng-href="https://docs.google.com/spreadsheets/d/[[item.key]]" ga-track-event="['action', 'openStack']">[[item.name]]</md-button>
                       <div layout="row" layout-align="center end" >
                         <span style="font-size: 14px">[[item.owner]]</span>
                       </div>                        

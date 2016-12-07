@@ -1,4 +1,4 @@
-app.controller('StackController', ['$scope', '$mdDialog', '$resource', '$timeout', '$mdSidenav', '$log', function($scope, $mdDialog, $resource, $timeout, $mdSidenav, $log){
+app.controller('StackController', ['$scope', '$mdDialog', '$resource', '$timeout', '$mdSidenav', '$log', 'Analytics', function($scope, $mdDialog, $resource, $timeout, $mdSidenav, $log, Analytics){
 
   $scope.input = ''
 
@@ -11,6 +11,8 @@ app.controller('StackController', ['$scope', '$mdDialog', '$resource', '$timeout
   );  
 
   $scope.search = function() {
+    Analytics.trackEvent('action', 'search', $scope.input);
+
     q = $scope.input
     if (q == '' || q == null) {
       q = "*"
@@ -21,9 +23,7 @@ app.controller('StackController', ['$scope', '$mdDialog', '$resource', '$timeout
     });
   };
 
-  //var StackApi = $resource('stack');
   StackAPI.list(function(data){
-    console.log('list all')
     $scope.projects = data;         
   });
 
@@ -31,7 +31,7 @@ app.controller('StackController', ['$scope', '$mdDialog', '$resource', '$timeout
   // -- Team view. Modal per stack id
   // ----------------------------
   $scope.showTeam = function(ev, id) {
-    console.log('show team')
+    Analytics.trackEvent('action', 'showTeam', id);
     // GET team for stack id
     url = 'api/stacks/team/' + id
     var TeamApi = $resource(url);
@@ -152,6 +152,8 @@ $scope.finishSearch = function() {
     param =  queryOwners + ' AND ' + queryTechs
     $log.debug('query parma: ' + param)
     $log.debug("changeItem - searching");
+
+    Analytics.trackEvent('action', 'toggle', param);
 
     StackAPI.search({ q: param }, function(data){
       $scope.projects = data;
