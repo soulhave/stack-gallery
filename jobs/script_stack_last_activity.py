@@ -24,6 +24,8 @@ query = {"query": {"range": {"@timestamp": {"gte" : "now-10m","lt" :  "now"}}}}
 spreadsheets = repository.searchByQuery('archboard', query)
 logger.info('total %s sheets' % spreadsheets['hits']['total'])
 
+stack.createTemplateIfNotExits('stack')
+
 for spreadsheet in spreadsheets['hits']['hits']:
 	logger.info('starting %s' % spreadsheet['_source']['sheet_id'])	
 	logger.info('=> loading sheet knowledge_map')

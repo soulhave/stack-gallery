@@ -33,10 +33,18 @@ class Stack(object):
 				}
 
 		"""
-
-		self.createTemplateIfNotExits('stack')
-
 		key = project['key']
+
+		# merge attr transational of stack if they weren't defined
+		if not 'last_activity' in project:
+			logger.info('last_activity is not defined')
+			doc_result = self.es.get(index="stack", doc_type="setting", id=key)
+			if '_source' in doc_result:
+				doc_stack = doc_result['_source']
+				project['last_activity'] = doc_stack.get('last_activity')
+				project['last_activity_user'] = doc_stack.get('last_activity_user')
+				logger.info('merge was done')
+
 		# add technologies list
 		techs = self.list_stack(key)
 		project['stack_size'] = len(techs) if techs else 0
@@ -127,7 +135,7 @@ class Stack(object):
 			contract = item['contract']['buckets'][0]
 			flow = contract['flow']['buckets'][0]
 			tkci = flow['tkci']['value']
-						
+			
 			doc = {
 				"key": key,
 				"owner" : contract['key'],
@@ -135,9 +143,6 @@ class Stack(object):
 				"index" : tkci
 			}
 
-			#print doc
-
-			#print('%s - %s - %s' % (doc['key'], doc['flow'], tkci))
 			projects.append(doc)
 		return projects
 

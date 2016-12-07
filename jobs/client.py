@@ -112,7 +112,6 @@ class TechAnalytics(object):
 		# authenticate and get service API for spreadsheet
 		service = knowledge.get_service_spreadsheets()
 
-
 		if sheet:
 			query = {"query": {"match": {"sheet_id": sheet}}}
 		else:
