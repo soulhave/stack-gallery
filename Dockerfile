@@ -14,6 +14,7 @@ RUN pip install requests
 RUN pip install elasticsearch
 RUN pip install httplib2
 RUN pip install PyJWT
+RUN pip install python-dotenv
 
 WORKDIR /app
 # -r is not working -> RUN pip install -r requirements.txt

@@ -1,5 +1,15 @@
 .DS_Store
 *~
-*.pyc
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
 .sass-cache
 venv
+
+#  dotenv
+.env
+

@@ -4,11 +4,16 @@ from flask import Flask
 import sys
 import logging
 import os
+from dotenv import load_dotenv
 
 mode = sys.argv[1] if len(sys.argv) > 1 else 'development'
 
 current_path = os.path.dirname(__file__)
 client_path = os.path.abspath(os.path.join(current_path, '..', 'client'))
+
+dotenv_path = os.path.abspath(os.path.join(current_path, '..', '.env'))
+load_dotenv(dotenv_path)
+
 
 app = Flask('stack', static_url_path='', static_folder=client_path)
 
