@@ -37,7 +37,6 @@ class Stack(object):
 
 		# merge attr transational of stack if they weren't defined
 		if not 'last_activity' in project:
-			logger.info('last_activity is not defined')
 			doc_result = self.es.get(index="stack", doc_type="setting", id=key)
 			if '_source' in doc_result:
 				doc_stack = doc_result['_source']

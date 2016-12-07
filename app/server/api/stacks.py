@@ -138,7 +138,7 @@ class Database(object):
 
 	def list_stack(self):
 		index = 'stack'
-		data = self.es.search(index=index, body={"query": {"match_all": {}}}, size=2500, sort='name:desc')
+		data = self.es.search(index=index, body={"query": {"match_all": {}}}, size=2500, sort='last_activity:desc')
 		list_stack = []
 		for item in data['hits']['hits']:
 			stack = item['_source']
