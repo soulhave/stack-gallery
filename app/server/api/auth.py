@@ -7,6 +7,7 @@ import json
 import logging
 from datetime import datetime
 
+
 # Using OAuth 2.0 to Access Google APIs. Login flow
 # https://developers.google.com/identity/protocols/OAuth2
 # https://developers.google.com/identity/protocols/OpenIDConnect#exchangecode
@@ -51,8 +52,6 @@ def google():
         token_info = json.loads(r.text)
         logger.debug('Tokeninfo =>')
         logger.debug(token_info)
-        # u = User(id=profile['sub'], provider='google',
-        #          display_name=profile['name'])    
 
         # Step 5. Create a new account or return an existing one.
         payload = {
@@ -75,7 +74,6 @@ def logout(user):
     security.revoke_token(access_token)
 
     return "Logout Success", 200
-
 
 def not_authorized(status, error):
     response = jsonify({'code': status,'message': error})
