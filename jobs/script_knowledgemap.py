@@ -12,6 +12,6 @@ logging.getLogger('elasticsearch').setLevel(logging.ERROR)
 
 ta = TechAnalytics()
 # sheet = None
-sheet = '1tsmRA0TOCEpr5aAQA8-B4CQ8jk0WtiVhiYNu8JK8YDQ'
+# sheet = '1tsmRA0TOCEpr5aAQA8-B4CQ8jk0WtiVhiYNu8JK8YDQ'
 
-ta.load_knowledge_map(sheet=sheet, notify=True)
+ta.load_knowledge_map(sheet=sheet, notify=False)
