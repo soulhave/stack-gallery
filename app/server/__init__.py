@@ -3,16 +3,15 @@ from server import util
 from flask import Flask
 import sys
 import logging
-import os
+from os.path import join, dirname, abspath, isfile
 from dotenv import load_dotenv
 
-mode = sys.argv[1] if len(sys.argv) > 1 else 'development'
-
-current_path = os.path.dirname(__file__)
-client_path = os.path.abspath(os.path.join(current_path, '..', 'client'))
-
-dotenv_path = os.path.abspath(os.path.join(current_path, '..', '.env'))
+logger = logging.getLogger('stack')
+dotenv_path = abspath(join(dirname(__file__), '..', '.env'))
 load_dotenv(dotenv_path)
+
+current_path = dirname(__file__)
+client_path = abspath(join(current_path, '..', 'client'))
 
 
 app = Flask('stack', static_url_path='', static_folder=client_path)
@@ -20,6 +19,8 @@ app = Flask('stack', static_url_path='', static_folder=client_path)
 ################
 #### config ####
 ################
+
+mode = util.get_environ(app.config, 'MODE', 'development')
 app.config.from_json('%s.json' % mode)
 app.config['GOOGLE_CLIENT_SECRET'] = util.get_environ(app.config, 'GOOGLE_CLIENT_SECRET')
 app.config['GOOGLE_CLIENT_ID'] = util.get_environ(app.config, 'GOOGLE_CLIENT_ID')
@@ -37,7 +38,6 @@ if (2, 7) <= sys.version_info < (3, 2):
 	for item in app.config['LOGGER']:
 		logging.getLogger(item['NAME']).setLevel(int(item['LEVELNO']))
 
-logger = logging.getLogger('stack')
 logger.info('starting app => %s ' % id(app))
 logger.info('starting mode => %s ' % mode)
 
