@@ -5,6 +5,7 @@ import requests
 from flask import jsonify
 import logging
 from elasticsearch import Elasticsearch
+from connection import UrlFetchAppEngine
 
 config = {'elasticsearch' : app.config['ELASTICSEARCH_URL']}
 
@@ -24,8 +25,7 @@ def api_trends_technologies(user):
 
 class Database(object):
   def __init__(self, config):
-    self.es = Elasticsearch([config['elasticsearch']])
-
+    self.es = Elasticsearch([config['elasticsearch']], connection_class=UrlFetchAppEngine, send_get_body_as='POST')
 
   def search_trends_owners(self, size):
     query = {
@@ -67,6 +67,9 @@ class Database(object):
   def search_aggs_by_query(self, query):
     index = 'stack'
     data = self.es.search(index=index, body=query)
+
+    for key, value in data.iteritems():
+        logging.info('Key ... %s', key)
 
     list_trends = []
     for item in data['aggregations']['owners']['buckets']:
