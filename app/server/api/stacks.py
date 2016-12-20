@@ -6,7 +6,7 @@ from flask import jsonify
 from flask import request
 import logging
 from elasticsearch import Elasticsearch
-from connection import UrlFetchAppEngine
+from elasticsearch import UrlFetchAppEngine
 
 config = {'elasticsearch' : app.config['ELASTICSEARCH_URL']}
 
